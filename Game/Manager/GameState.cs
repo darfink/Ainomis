@@ -80,6 +80,10 @@ namespace Ainomis.Game.Manager {
     ///   </para>
     /// </remarks>
     public virtual void Exit() {
+      // Free entity memory
+      EntityWorld.Clear();
+
+      // Free all assets
       this.Content.Unload();
     }
 

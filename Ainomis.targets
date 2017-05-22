@@ -13,6 +13,8 @@
     <ExternalCompile Include="Shared\Input\IKeyBinding.cs" />
     <ExternalCompile Include="Shared\Input\IKeyBindingSystem.cs" />
     <ExternalCompile Include="Shared\Input\KeyActionBinder.cs" />
+    <ExternalCompile Include="Shared\Input\Joystick\JoystickBinding.cs" />
+    <ExternalCompile Include="Shared\Input\Joystick\JoystickBindingSystem.cs" />
     <ExternalCompile Include="Shared\Input\Keyboard\KeyboardBinding.cs" />
     <ExternalCompile Include="Shared\Input\Keyboard\KeyboardBindingSystem.cs" />
     <ExternalCompile Include="Shared\State\GameStateStackBase.cs" />

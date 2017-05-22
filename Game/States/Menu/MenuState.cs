@@ -33,8 +33,8 @@ namespace Ainomis.Game.States.Menu {
     }
 
     public override void Enter() {
-      _backgroundMusic = Content.Load<Song>("Menu/Music");
       _backgroundFont = Content.Load<SpriteFont>("Menu/Label");
+      _backgroundMusic = Content.Load<Song>("Menu/Music");
 
       MediaPlayer.IsRepeating = true;
       MediaPlayer.Play(_backgroundMusic);
@@ -45,9 +45,6 @@ namespace Ainomis.Game.States.Menu {
     public override void Exit() {
       MediaPlayer.IsRepeating = false;
       MediaPlayer.Stop();
-
-      // Free all entity memory
-      EntityWorld.Clear();
 
       // Free our resources
       base.Exit();

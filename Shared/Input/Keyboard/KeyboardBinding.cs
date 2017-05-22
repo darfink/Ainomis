@@ -9,6 +9,7 @@ namespace Ainomis.Shared.Input.Keyboard {
     /// </summary>
     /// <param name="key">Key.</param>
     /// <param name="duration">Duration.</param>
+    /// <param name="timeout">Timeout.</param>
     /// <param name="modifiers">Modifiers.</param>
     public KeyboardBinding(Keys key, TimeSpan duration = new TimeSpan(), TimeSpan? timeout = null, params Keys[] modifiers) {
       this.Modifiers = modifiers;

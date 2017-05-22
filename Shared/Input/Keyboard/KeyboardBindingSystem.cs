@@ -15,21 +15,21 @@ namespace Ainomis.Shared.Input.Keyboard {
       keyHeldTimes = new Dictionary<Keys, TimeSpan>();
       currentState = Keyboard.GetState();
 
-      foreach(var key in Enum.GetValues(typeof(Keys))) {
+      foreach(Keys key in Enum.GetValues(typeof(Keys))) {
         // Initially all keys have been held for zero seconds
-        keyHeldTimes.Add((Keys)key, TimeSpan.Zero);
+        keyHeldTimes.Add(key, TimeSpan.Zero);
       }
     }
 
     public void Update(GameTime gameTime) {
       currentState = Keyboard.GetState();
 
-      foreach(var key in Enum.GetValues(typeof(Keys))) {
+      foreach(Keys key in Enum.GetValues(typeof(Keys))) {
         // Update the current hold time for each key
-        if(currentState[(Keys)key] == KeyState.Down) {
-          keyHeldTimes[(Keys)key] += gameTime.ElapsedGameTime;
+        if(currentState[key] == KeyState.Down) {
+          keyHeldTimes[key] += gameTime.ElapsedGameTime;
         } else {
-          keyHeldTimes[(Keys)key] = TimeSpan.Zero;
+          keyHeldTimes[key] = TimeSpan.Zero;
         }
       }
     }
@@ -49,8 +49,6 @@ namespace Ainomis.Shared.Input.Keyboard {
       return false;
     }
 
-    public Type GetBindingType() {
-      return typeof(KeyboardBinding);
-    }
+    public Type GetBindingType() => typeof(KeyboardBinding);
   }
 }
