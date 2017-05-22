@@ -1,6 +1,5 @@
 namespace Ainomis.Game.Manager {
-  using System.Diagnostics;
-
+  using Ainomis.Extensions;
   using Ainomis.Shared.Display;
   using Ainomis.Shared.Input;
   using Ainomis.Shared.State;
@@ -40,17 +39,11 @@ namespace Ainomis.Game.Manager {
         SpriteBatch spriteBatch,
         KeyActionBinder<GameAction> keyActionBinder,
         IDisplayInfo displayInfo) {
-      Debug.Assert(content != null);
-      Debug.Assert(gameStateManager != null);
-      Debug.Assert(spriteBatch != null);
-      Debug.Assert(keyActionBinder != null);
-      Debug.Assert(displayInfo != null);
-
-      this.Content = content;
-      this.GameStateManager = gameStateManager;
-      this.SpriteBatch = spriteBatch;
-      this.KeyActionBinder = keyActionBinder;
-      this.DisplayInfo = displayInfo;
+      this.Content = content.ThrowIfNull(nameof(content));
+      this.GameStateManager = gameStateManager.ThrowIfNull(nameof(gameStateManager));
+      this.SpriteBatch = spriteBatch.ThrowIfNull(nameof(spriteBatch));
+      this.KeyActionBinder = keyActionBinder.ThrowIfNull(nameof(keyActionBinder));
+      this.DisplayInfo = displayInfo.ThrowIfNull(nameof(displayInfo));
 
       this.EntityWorld = new EntityWorld();
       this.SetupSystems(this.EntityWorld.SystemManager);

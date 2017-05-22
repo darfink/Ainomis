@@ -1,6 +1,5 @@
 namespace Ainomis.Shared.Input.Keyboard {
   using System;
-  using System.Diagnostics;
 
   using Microsoft.Xna.Framework.Input;
 
@@ -17,7 +16,9 @@ namespace Ainomis.Shared.Input.Keyboard {
       this.Key = key;
 
       if(timeout != null) {
-        Debug.Assert(timeout.Value > duration, "timeout must be larger than duration");
+        if (timeout.Value <= duration) {
+          throw new ArgumentException("timeout must be larger than duration");
+        }
         this.Timeout = timeout;
       }
     }

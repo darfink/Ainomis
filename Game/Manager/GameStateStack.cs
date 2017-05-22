@@ -1,7 +1,6 @@
 namespace Ainomis.Game.Manager {
   using System;
   using System.Collections.Generic;
-  using System.Diagnostics;
   using System.Linq;
 
   using Ainomis.Extensions;
@@ -57,8 +56,7 @@ namespace Ainomis.Game.Manager {
     public override void Push(
         IGameState state,
         Modality modality = Modality.Exclusive) {
-      Debug.Assert(state != null);
-
+      state.ThrowIfNull(nameof(state));
       mActiveStates.Add(new GameStateModalityPair(state as GameState, modality));
 
       if(modality == Modality.Exclusive) {
@@ -73,7 +71,9 @@ namespace Ainomis.Game.Manager {
     }
 
     public override IGameState Pop() {
-      Debug.Assert(mActiveStates.Count > 0);
+      if (mActiveStates.Count == 0) {
+        throw new InvalidOperationException();
+      }
 
       GameStateModalityPair popped = mActiveStates.Last();
       popped.State.Exit();

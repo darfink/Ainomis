@@ -31,6 +31,7 @@
     <ExternalCompile Include="Game\Systems\BasicRenderSystem.cs" />
     <ExternalCompile Include="Game\Systems\TranslationSystem.cs" />
     <ExternalCompile Include="Extensions\ContentManagerExtensions.cs" />
+    <ExternalCompile Include="Extensions\GenericExtensions.cs" />
     <ExternalCompile Include="Extensions\LinqExtensions.cs" />
     <ExternalCompile Include="Extensions\RenderTarget2DExtensions.cs" />
     <ExternalCompile Include="Extensions\SpriteBatchExtensions.cs" />

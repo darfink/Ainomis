@@ -1,6 +1,4 @@
 namespace Ainomis {
-  using System.Diagnostics;
-
   using Ainomis.Extensions;
   using Ainomis.Game.Manager;
   using Ainomis.Shared;
@@ -32,15 +30,12 @@ namespace Ainomis {
     private SpriteBatch _spriteBatch;
 
     public MainGame(XnaGame game, KeyActionBinder<GameAction> keyActionBinder) {
-      Debug.Assert(keyActionBinder != null);
-      Debug.Assert(game != null);
-
       // Use the same resource prefix regardless of platform
       game.Content.RootDirectory = Settings.ResourcePrefix;
 
       _gameStateStack = new GameStateStack();
-      _keyActionBinder = keyActionBinder;
-      _game = game;
+      _keyActionBinder = keyActionBinder.ThrowIfNull(nameof(keyActionBinder));
+      _game = game.ThrowIfNull(nameof(game));
     }
 
     public void Initialize() {

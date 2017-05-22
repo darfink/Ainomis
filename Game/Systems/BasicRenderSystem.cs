@@ -1,4 +1,5 @@
 namespace Ainomis.Game.Systems {
+  using Ainomis.Extensions;
   using Ainomis.Game.Components;
 
   using Artemis;
@@ -21,9 +22,8 @@ namespace Ainomis.Game.Systems {
     // To be included in the basic render system, an entity must include a
     // texture and a transform component.
     public BasicRenderSystem(SpriteBatch spriteBatch) : base(Requirement) {
-      System.Diagnostics.Debug.Assert(spriteBatch != null);
       _defaultSprite = new SpriteComponent();
-      _spriteBatch = spriteBatch;
+      _spriteBatch = spriteBatch.ThrowIfNull(nameof(spriteBatch));
     }
 
     public override void Process(Entity entity) {
