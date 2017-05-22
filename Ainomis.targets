@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ExternalCompile Include="AssemblyInfo.cs" />
     <ExternalCompile Include="Shared\Size.cs" />
     <ExternalCompile Include="Shared\Camera\Camera2D.cs" />
     <ExternalCompile Include="Shared\Camera\ICamera2D.cs" />
@@ -19,7 +20,6 @@
     <ExternalCompile Include="Shared\State\Modality.cs" />
     <ExternalCompile Include="Shared\Utility\Assets.cs" />
     <ExternalCompile Include="Shared\Utility\Settings.cs" />
-    <ExternalCompile Include="Properties\AssemblyInfo.cs" />
     <ExternalCompile Include="Game\Action.cs" />
     <ExternalCompile Include="Game\Components\SpriteComponent.cs" />
     <ExternalCompile Include="Game\Components\TextureComponent.cs" />
