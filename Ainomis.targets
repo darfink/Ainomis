@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ExternalCompile Include="Shared\Size.cs" />
+    <ExternalCompile Include="Shared\Camera\Camera2D.cs" />
+    <ExternalCompile Include="Shared\Camera\ICamera2D.cs" />
+    <ExternalCompile Include="Shared\Camera\IFocusable.cs" />
+    <ExternalCompile Include="Shared\Common\IDrawable.cs" />
+    <ExternalCompile Include="Shared\Common\IUpdateable.cs" />
+    <ExternalCompile Include="Shared\Display\DisplayInfo.cs" />
+    <ExternalCompile Include="Shared\Display\IDisplayInfo.cs" />
+    <ExternalCompile Include="Shared\Input\IKeyBinding.cs" />
+    <ExternalCompile Include="Shared\Input\IKeyBindingSystem.cs" />
+    <ExternalCompile Include="Shared\Input\KeyActionBinder.cs" />
+    <ExternalCompile Include="Shared\Input\Keyboard\KeyboardBinding.cs" />
+    <ExternalCompile Include="Shared\Input\Keyboard\KeyboardBindingSystem.cs" />
+    <ExternalCompile Include="Shared\State\GameStateStackBase.cs" />
+    <ExternalCompile Include="Shared\State\IGameState.cs" />
+    <ExternalCompile Include="Shared\State\Modality.cs" />
+    <ExternalCompile Include="Shared\Utility\Assets.cs" />
+    <ExternalCompile Include="Shared\Utility\Settings.cs" />
+    <ExternalCompile Include="Properties\AssemblyInfo.cs" />
+    <ExternalCompile Include="Game\Action.cs" />
+    <ExternalCompile Include="Game\Components\SpriteComponent.cs" />
+    <ExternalCompile Include="Game\Components\TextureComponent.cs" />
+    <ExternalCompile Include="Game\Components\TilesetComponent.cs" />
+    <ExternalCompile Include="Game\Components\TransformComponent.cs" />
+    <ExternalCompile Include="Game\Components\VelocityComponent.cs" />
+    <ExternalCompile Include="Game\Manager\GameState.cs" />
+    <ExternalCompile Include="Game\Manager\GameStateStack.cs" />
+    <ExternalCompile Include="Game\Systems\BasicRenderSystem.cs" />
+    <ExternalCompile Include="Game\Systems\TranslationSystem.cs" />
+    <ExternalCompile Include="Extensions\ContentManagerExtensions.cs" />
+    <ExternalCompile Include="Extensions\LinqExtensions.cs" />
+    <ExternalCompile Include="Extensions\RenderTarget2DExtensions.cs" />
+    <ExternalCompile Include="Extensions\SpriteBatchExtensions.cs" />
+    <ExternalCompile Include="Extensions\StringExtensions.cs" />
+    <ExternalCompile Include="MainGame.cs" />
+    <ExternalCompile Include="Game\Resource\Tileset.cs" />
+    <ExternalCompile Include="Game\States\Menu\MenuState.cs" />
+    <ExternalCompile Include="Game\Manager\GameStateManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Game\Resource\" />
+    <Folder Include="Game\States\Menu\" />
+    <Folder Include="Assets\Menu\" />
+  </ItemGroup>
+</Project>
