@@ -39,16 +39,7 @@ namespace Ainomis.Game.States.Menu {
       MediaPlayer.IsRepeating = true;
       MediaPlayer.Play(_backgroundMusic);
 
-      var entity = EntityWorld.CreateEntity();
-      var texture = Content.Load<Texture2D>("Menu/Background");
-      entity.AddComponent(new TextureComponent(texture));
-      entity.AddComponent(new TransformComponent(0f, 0f));
-      entity.AddComponent(new SpriteComponent() {
-        // Stretch the image so it fits 1:1 to the screen area
-        Scale = DisplayInfo.VirtualResolution / new Vector2(texture.Width, texture.Height),
-      });
-
-      entity.Refresh();
+      this.SetupBackground(EntityWorld.CreateEntity()).Refresh();
     }
 
     public override void Exit() {
@@ -71,6 +62,7 @@ namespace Ainomis.Game.States.Menu {
       SpriteBatch.Begin(_camera.Transform);
       EntityWorld.Draw();
 
+      // Toggle the text at a regular interval
       if (gameTime.TotalGameTime.Seconds % 3 != 0) {
         this.DrawMenu();
       }
@@ -86,8 +78,7 @@ namespace Ainomis.Game.States.Menu {
       manager.SetSystem(new TranslationSystem(), GameLoopType.Update);
     }
 
-    private void DrawMenu()
-    {
+    private void DrawMenu() {
       // TODO: Localize messages (use resx?)
       var message = "Press any button to start";
       var messageSize = _backgroundFont.MeasureString(message);
@@ -95,6 +86,19 @@ namespace Ainomis.Game.States.Menu {
       messagePosition.Y *= 0.8f;
 
       SpriteBatch.DrawString(_backgroundFont, message, messagePosition, Color.WhiteSmoke);
+    }
+
+    private Entity SetupBackground(Entity entity) {
+      var texture = Content.Load<Texture2D>("Menu/Background");
+
+      entity.AddComponent(new TextureComponent(texture));
+      entity.AddComponent(new TransformComponent(0f, 0f));
+      entity.AddComponent(new SpriteComponent() {
+        // Stretch the image so it fits 1:1 to the screen area
+        Scale = DisplayInfo.VirtualResolution / new Vector2(texture.Width, texture.Height),
+      });
+
+      return entity;
     }
   }
 }

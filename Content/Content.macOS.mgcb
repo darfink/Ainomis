@@ -35,6 +35,6 @@
 #begin Menu/Music.ogg
 /importer:OggImporter
 /processor:SongProcessor
-/processorParam:Quality=Best
+/processorParam:Quality=Low
 /build:Menu/Music.ogg
 
