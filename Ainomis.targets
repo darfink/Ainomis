@@ -36,12 +36,12 @@
     <ExternalCompile Include="Extensions\SpriteBatchExtensions.cs" />
     <ExternalCompile Include="Extensions\StringExtensions.cs" />
     <ExternalCompile Include="MainGame.cs" />
-    <ExternalCompile Include="Game\Resource\Tileset.cs" />
+    <ExternalCompile Include="Game\Resources\Tileset.cs" />
     <ExternalCompile Include="Game\States\Menu\MenuState.cs" />
     <ExternalCompile Include="Game\Manager\GameStateManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game\Resource\" />
+    <Folder Include="Game\Resources\" />
     <Folder Include="Game\States\Menu\" />
     <Folder Include="Assets\Menu\" />
   </ItemGroup>

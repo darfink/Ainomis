@@ -1,4 +1,4 @@
-namespace Ainomis.Game.Resource {
+namespace Ainomis.Game.Resources {
   using Microsoft.Xna.Framework;
 
   internal class Tileset {

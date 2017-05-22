@@ -1,5 +1,5 @@
 namespace Ainomis.Game.Components {
-  using Ainomis.Game.Resource;
+  using Ainomis.Game.Resources;
 
   using Artemis.Interface;
 
