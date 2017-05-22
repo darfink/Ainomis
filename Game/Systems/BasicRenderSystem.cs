@@ -11,7 +11,7 @@ namespace Ainomis.Game.Systems {
   /// <summary>
   /// Tileset render system.
   /// </summary>
-  public class BasicRenderSystem : EntityProcessingSystem {
+  internal class BasicRenderSystem : EntityProcessingSystem {
     public static readonly Aspect Requirement = Aspect
       .All(typeof(TextureComponent), typeof(TransformComponent));
 

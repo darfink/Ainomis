@@ -7,7 +7,7 @@ namespace Ainomis.Game.Components {
   /// <summary>
   /// Sprite component.
   /// </summary>
-  public class SpriteComponent : IComponent {
+  internal class SpriteComponent : IComponent {
     /// <summary>
     /// Gets or sets the source.
     /// </summary>

@@ -5,7 +5,7 @@ namespace Ainomis.Game.Components {
 
   using Microsoft.Xna.Framework.Graphics;
 
-  public class TextureComponent : IComponent {
+  internal class TextureComponent : IComponent {
     private Texture2D _texture;
 
     /// <summary>

@@ -3,7 +3,7 @@ namespace Ainomis.Game.Components {
 
   using Artemis.Interface;
 
-  public class VelocityComponent : IComponent {
+  internal class VelocityComponent : IComponent {
     /// <summary>To radians.</summary>
     private const float ToRadians = (float)(Math.PI / 180.0);
 

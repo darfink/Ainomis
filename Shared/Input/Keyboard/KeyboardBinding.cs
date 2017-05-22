@@ -19,6 +19,7 @@ namespace Ainomis.Shared.Input.Keyboard {
         if (timeout.Value <= duration) {
           throw new ArgumentException("timeout must be larger than duration");
         }
+
         this.Timeout = timeout;
       }
     }

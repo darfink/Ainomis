@@ -28,6 +28,13 @@
 #begin Menu/Label.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Menu/Label.spritefont
+
+#begin Menu/Music.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Menu/Music.ogg
 

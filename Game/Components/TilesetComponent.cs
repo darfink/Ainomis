@@ -5,7 +5,7 @@ namespace Ainomis.Game.Components {
 
   using Microsoft.Xna.Framework;
 
-  class TilesetComponent : Tileset, IComponent {
+  internal class TilesetComponent : Tileset, IComponent {
     /// <summary>
     /// Gets the source.
     /// </summary>

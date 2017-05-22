@@ -8,7 +8,7 @@ namespace Ainomis.Game.Systems {
 
   using Microsoft.Xna.Framework;
 
-  public class TranslationSystem : EntityComponentProcessingSystem<TransformComponent, VelocityComponent> {
+  internal class TranslationSystem : EntityComponentProcessingSystem<TransformComponent, VelocityComponent> {
     public override void Process(Entity entity, TransformComponent transform, VelocityComponent velocity) {
       if(velocity.Speed == 0) {
         return;

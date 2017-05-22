@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.6.0.1625\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\Current\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\Current\MonoGame.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,7 +10,7 @@
     <RootNamespace>Ainomis</RootNamespace>
     <MonoMacResourcePrefix>Platform\macOS</MonoMacResourcePrefix>
     <AssemblyName>AinomisMac</AssemblyName>
-    <MonoGamePlatform>DesktopGL</MonoGamePlatform>
+    <MonoGamePlatform>MacOSX</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseXamMacFullFramework>true</UseXamMacFullFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -68,12 +68,6 @@
     <Reference Include="artemis">
       <HintPath>packages\Artemis.1.3.1\lib\net40\artemis.dll</HintPath>
     </Reference>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>packages\MonoGame.Framework.MacOS.3.6.0.1625\lib\net45\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK">
-      <HintPath>packages\MonoGame.Framework.MacOS.3.6.0.1625\lib\net45\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="Xamarin.Mac" />
     <Reference Include="SimpleInjector">
       <HintPath>packages\SimpleInjector.4.0.7\lib\net45\SimpleInjector.dll</HintPath>
@@ -81,12 +75,19 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="MonoGame.Framework">
+      <HintPath>packages\MonoGame.Framework.MacOS.3.6.0.1625\lib\net45\MonoGame.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK">
+      <HintPath>packages\MonoGame.Framework.MacOS.3.6.0.1625\lib\net45\OpenTK.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.macOS.mgcb" />
     <None Include="Content\Menu\Background.jpg" />
     <None Include="Content\Menu\Calibri.ttf" />
     <None Include="Content\Menu\Label.spritefont" />
+    <None Include="Content\Menu\Music.ogg" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Ainomis.targets" />
@@ -102,7 +103,7 @@
   </ItemGroup>
   <!-- Building assets automatically does not work at the moment -->
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.6.0.1625\MonoGame.Content.Builder.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\Current\MonoGame.Content.Builder.targets" />
   <Import Project="Ainomis.targets" />
   <ItemGroup>
       <Compile Include="@(ExternalCompile)" />

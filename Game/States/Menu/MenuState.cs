@@ -1,10 +1,10 @@
 namespace Ainomis.Game.States.Menu {
+  using Ainomis.Game.Components;
   using Ainomis.Game.Manager;
   using Ainomis.Game.Systems;
-  using Ainomis.Game.Components;
   using Ainomis.Shared.Camera;
-  using Ainomis.Shared.Input;
   using Ainomis.Shared.Display;
+  using Ainomis.Shared.Input;
 
   using Artemis;
   using Artemis.Manager;
@@ -12,14 +12,16 @@ namespace Ainomis.Game.States.Menu {
   using Microsoft.Xna.Framework;
   using Microsoft.Xna.Framework.Content;
   using Microsoft.Xna.Framework.Graphics;
+  using Microsoft.Xna.Framework.Media;
 
   using Common = Shared.Common;
   using GameAction = Game.Action;
 
-  class MenuState : GameState, Common.IDrawable, Common.IUpdateable {
+  internal class MenuState : GameState, Common.IDrawable, Common.IUpdateable {
     // Private members
     private Camera2D _camera;
-    private SpriteFont _font;
+    private SpriteFont _backgroundFont;
+    private Song _backgroundMusic;
 
     public MenuState(
       ContentManager content,
@@ -31,10 +33,14 @@ namespace Ainomis.Game.States.Menu {
     }
 
     public override void Enter() {
+      _backgroundMusic = Content.Load<Song>("Menu/Music");
+      _backgroundFont = Content.Load<SpriteFont>("Menu/Label");
+
+      MediaPlayer.IsRepeating = true;
+      MediaPlayer.Play(_backgroundMusic);
+
       var entity = EntityWorld.CreateEntity();
       var texture = Content.Load<Texture2D>("Menu/Background");
-      _font = Content.Load<SpriteFont>("Menu/Label");
-
       entity.AddComponent(new TextureComponent(texture));
       entity.AddComponent(new TransformComponent(0f, 0f));
       entity.AddComponent(new SpriteComponent() {
@@ -46,6 +52,9 @@ namespace Ainomis.Game.States.Menu {
     }
 
     public override void Exit() {
+      MediaPlayer.IsRepeating = false;
+      MediaPlayer.Stop();
+
       // Free all entity memory
       EntityWorld.Clear();
 
@@ -61,11 +70,11 @@ namespace Ainomis.Game.States.Menu {
     public void Draw(GameTime gameTime) {
       SpriteBatch.Begin(_camera.Transform);
       EntityWorld.Draw();
-      SpriteBatch.DrawString(
-        _font,
-        "Press any button to start",
-        (Vector2) DisplayInfo.VirtualResolution / 2f,
-        Color.WhiteSmoke);
+
+      if (gameTime.TotalGameTime.Seconds % 3 != 0) {
+        this.DrawMenu();
+      }
+
       SpriteBatch.End();
     }
 
@@ -75,6 +84,17 @@ namespace Ainomis.Game.States.Menu {
 
       manager.SetSystem(new BasicRenderSystem(SpriteBatch), GameLoopType.Draw);
       manager.SetSystem(new TranslationSystem(), GameLoopType.Update);
+    }
+
+    private void DrawMenu()
+    {
+      // TODO: Localize messages (use resx?)
+      var message = "Press any button to start";
+      var messageSize = _backgroundFont.MeasureString(message);
+      var messagePosition = ((Vector2)DisplayInfo.VirtualResolution / 2f) - (messageSize / 2f);
+      messagePosition.Y *= 0.8f;
+
+      SpriteBatch.DrawString(_backgroundFont, message, messagePosition, Color.WhiteSmoke);
     }
   }
 }

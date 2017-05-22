@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.6.0.1625\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\Current\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\Current\MonoGame.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
@@ -10,7 +10,7 @@
     <RootNamespace>Ainomis</RootNamespace>
     <AssemblyName>Ainomis</AssemblyName>
     <MonoGamePlatform>iOS</MonoGamePlatform>
-    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <IPhoneResourcePrefix>Platform\iOS\Resources</IPhoneResourcePrefix>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
@@ -132,7 +132,7 @@
     <Compile Include="$(IPhoneSourcePrefix)\Main.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.6.0.1625\MonoGame.Content.Builder.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\Current\MonoGame.Content.Builder.targets" />
   <Import Project="./Ainomis.targets" />
   <ItemGroup>
       <Compile Include="@(ExternalCompile)" />

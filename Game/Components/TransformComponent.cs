@@ -7,7 +7,7 @@ namespace Ainomis.Game.Components {
 
   using Microsoft.Xna.Framework;
 
-  public class TransformComponent : IComponent, IFocusable {
+  internal class TransformComponent : IComponent, IFocusable {
     public TransformComponent(Vector2 position, float rotation = 0f) {
       this.Rotation = rotation;
       this.Position = position;
