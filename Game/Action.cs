@@ -21,7 +21,8 @@ namespace Ainomis.Game {
     Right = (1 << 6),
 
     // Meta
-    Exit  = (1 << 7),
+    Start = (1 << 7),
+    Exit  = (1 << 8),
 
     // Tap aliases
     TapUp    = (Tap | Up),

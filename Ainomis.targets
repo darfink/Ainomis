@@ -40,11 +40,13 @@
     <ExternalCompile Include="Extensions\StringExtensions.cs" />
     <ExternalCompile Include="MainGame.cs" />
     <ExternalCompile Include="Game\Resources\Tileset.cs" />
+    <ExternalCompile Include="Game\States\Explore\ExploreState.cs" />
     <ExternalCompile Include="Game\States\Menu\MenuState.cs" />
     <ExternalCompile Include="Game\Manager\GameStateManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game\Resources\" />
+    <Folder Include="Game\States\Explore\" />
     <Folder Include="Game\States\Menu\" />
     <Folder Include="Assets\Menu\" />
   </ItemGroup>

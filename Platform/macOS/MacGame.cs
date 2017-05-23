@@ -40,7 +40,7 @@ namespace Ainomis.Platform.MacOS {
       // Setup the joystick bindings if a controller is connected
       if (JoystickBindingSystem.IsConnected(PlayerIndex.One)) {
         kab.AddBindingSystem(new JoystickBindingSystem(PlayerIndex.One));
-        kab.AddActionBinding(GameAction.Exit, new JoystickBinding(Buttons.Start));
+        kab.AddActionBinding(GameAction.Start, new JoystickBinding(Buttons.Start));
       }
 
       // Return control to the platform-agnostic game object

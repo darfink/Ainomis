@@ -53,6 +53,10 @@ namespace Ainomis.Game.States.Menu {
     public void Update(GameTime gameTime) {
       _camera.Update(gameTime);
       EntityWorld.Update();
+
+      if (KeyActionBinder.IsActionActivated(GameAction.Start)) {
+        GameStateManager.Switch<Explore.ExploreState>();
+      }
     }
 
     public void Draw(GameTime gameTime) {
@@ -77,7 +81,7 @@ namespace Ainomis.Game.States.Menu {
 
     private void DrawMenu() {
       // TODO: Localize messages (use resx?)
-      var message = "Press any button to start";
+      var message = "Press the start button to begin your adventure!";
       var messageSize = _backgroundFont.MeasureString(message);
       var messagePosition = ((Vector2)DisplayInfo.VirtualResolution / 2f) - (messageSize / 2f);
       messagePosition.Y *= 0.8f;

@@ -102,6 +102,7 @@ namespace Ainomis {
       container.Register<IDisplayInfo>(() => _displayInfo, Lifestyle.Singleton);
 
       // Register all game states
+      container.Register<GameStates.Explore.ExploreState>();
       container.Register<GameStates.Menu.MenuState>();
 
       // Dispose is never called on the content managers
