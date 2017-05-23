@@ -23,6 +23,8 @@ namespace Ainomis.Shared.Input.Joystick {
       }
     }
 
+    public static bool IsConnected(PlayerIndex player) => GamePad.GetState(player).IsConnected;
+
     public void Update(GameTime gameTime) {
       _currentState = GamePad.GetState(_playerIndex);
 
@@ -52,7 +54,5 @@ namespace Ainomis.Shared.Input.Joystick {
     }
 
     public Type GetBindingType() => typeof(JoystickBinding);
-
-    public static bool IsConnected(PlayerIndex player) => GamePad.GetState(player).IsConnected;
   }
 }
