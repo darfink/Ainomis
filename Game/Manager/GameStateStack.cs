@@ -39,7 +39,9 @@ namespace Ainomis.Game.Manager {
       mExposedDrawables = new List<IDrawable>();
     }
 
-    ~GameStateStack() {
+    ~GameStateStack() => Clear();
+
+    public void Clear() {
       while(mActiveStates.Count > 0) {
         this.Pop();
       }

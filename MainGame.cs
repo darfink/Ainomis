@@ -36,6 +36,9 @@ namespace Ainomis {
 
       // Use the same resource prefix regardless of platform
       _game.Content.RootDirectory = Settings.ResourcePrefix;
+
+      // Manually dispose all states upon exit
+      _game.Exiting += (sender, e) => _gameStateStack.Clear();
     }
 
     public void Initialize() {
