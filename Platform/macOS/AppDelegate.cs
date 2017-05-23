@@ -7,14 +7,12 @@ namespace Ainomis.Platform.MacOS {
   using Foundation;
 
   public class AppDelegate : NSApplicationDelegate {
-    // Private fields
-    private MacGame _game;
-
     public override void DidFinishLaunching(NSNotification notification) {
       this.SetupMainMenu();
 
-      _game = new MacGame();
-      _game.Run();
+      using (var game = new MacGame()) {
+        game.Run();
+      }
     }
 
     public override bool ApplicationShouldTerminateAfterLastWindowClosed(NSApplication sender) {
