@@ -13,6 +13,7 @@
     <MonoGamePlatform>MacOSX</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseXamMacFullFramework>true</UseXamMacFullFramework>
+    <UseFnaFramework>true</UseFnaFramework>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -75,13 +76,39 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="MonoGame.Framework">
-      <HintPath>packages\MonoGame.Framework.MacOS.3.6.0.1625\lib\net45\MonoGame.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK">
-      <HintPath>packages\MonoGame.Framework.MacOS.3.6.0.1625\lib\net45\OpenTK.dll</HintPath>
-    </Reference>
   </ItemGroup>
+  <Choose>
+    <When Condition=" '$(UseFnaFramework)' != 'true' ">
+      <!-- Assembly references to MonoGame if used -->
+      <ItemGroup>
+        <Reference Include="MonoGame.Framework">
+          <HintPath>packages\MonoGame.Framework.MacOS.3.6.0.1625\lib\net45\MonoGame.Framework.dll</HintPath>
+        </Reference>
+        <Reference Include="OpenTK">
+          <HintPath>packages\MonoGame.Framework.MacOS.3.6.0.1625\lib\net45\OpenTK.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
+    <When Condition=" '$(UseFnaFramework)' == 'true' ">
+      <!-- Project/native references to FNA if used -->
+      <ItemGroup>
+        <ProjectReference Include="FNA\FNA.csproj">
+          <Project>{35253CE1-C864-4CD3-8249-4D1319748E8F}</Project>
+          <Name>FNA</Name>
+        </ProjectReference>
+      </ItemGroup>
+      <ItemGroup>
+        <NativeReference Include="$(MonoMacResourcePrefix)\Libraries\*.dylib">
+          <Kind>Dynamic</Kind>
+          <SmartLink>False</SmartLink>
+        </NativeReference>
+      </ItemGroup>
+      <PropertyGroup>
+        <MonoGamePlatform>DesktopGL</MonoGamePlatform>
+        <ContentRootDirectory>../MonoBundle/Content</ContentRootDirectory>
+      </PropertyGroup>
+    </When>
+  </Choose>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.macOS.mgcb" />
     <None Include="Content\Menu\Background.jpg" />
@@ -101,7 +128,7 @@
     <Compile Include="$(MonoMacResourcePrefix)\Main.cs" />
     <InterfaceDefinition Include="$(MonoMacResourcePrefix)\MainMenu.xib" />
   </ItemGroup>
-  <!-- Building assets automatically does not work at the moment -->
+  <!-- The FNA project version still depends on MonoGame for the pipeline -->
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\Current\MonoGame.Content.Builder.targets" />
   <Import Project="Ainomis.targets" />
