@@ -30,12 +30,12 @@ namespace Ainomis {
     private SpriteBatch _spriteBatch;
 
     public MainGame(XnaGame game, KeyActionBinder<GameAction> keyActionBinder) {
-      // Use the same resource prefix regardless of platform
-      game.Content.RootDirectory = Settings.ResourcePrefix;
-
       _gameStateStack = new GameStateStack();
       _keyActionBinder = keyActionBinder.ThrowIfNull(nameof(keyActionBinder));
       _game = game.ThrowIfNull(nameof(game));
+
+      // Use the same resource prefix regardless of platform
+      _game.Content.RootDirectory = Settings.ResourcePrefix;
     }
 
     public void Initialize() {
