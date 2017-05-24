@@ -117,6 +117,9 @@ namespace Ainomis.Game.Manager {
     /// <summary>
     ///   Notifies the game state that it is no longer obscured by another state
     /// </summary>
+    /// <param name="completely">
+    ///   Whether the game state is completely revealed or only partially.
+    /// </param>
     /// <remarks>
     ///   This notification will be issued when the game state was obscured by
     ///   another state sitting on top of it but that state has now been
@@ -124,7 +127,7 @@ namespace Ainomis.Game.Manager {
     ///   it should now resume drawing or perhaps re-add the menu items to the
     ///   game's GUI in case it removed them when it was first obscured.
     /// </remarks>
-    public virtual void Reveal() {
+    public virtual void Reveal(bool completely) {
     }
 
     /// <summary>

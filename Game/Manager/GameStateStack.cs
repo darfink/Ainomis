@@ -28,181 +28,87 @@ namespace Ainomis.Game.Manager {
   ///   </para>
   /// </remarks>
   internal class GameStateStack : GameStateStackBase<GameState>, IDrawable, IUpdateable {
-    // Private members
-    private List<GameStateModalityPair> _activeStates;
-    private List<IUpdateable> _exposedUpdateables;
-    private List<IDrawable> _exposedDrawables;
+    private Stack<GameStateModalityPair> _stateStack = new Stack<GameStateModalityPair>();
 
-    public GameStateStack() {
-      _activeStates = new List<GameStateModalityPair>();
-      _exposedUpdateables = new List<IUpdateable>();
-      _exposedDrawables = new List<IDrawable>();
-    }
-
+    /// <summary>Calls <see cref="Clear">Clear</see>.</summary>
     ~GameStateStack() => Clear();
 
+    /// <summary>Returns all states that are completely, or partially exposed.</summary>
+    private IEnumerable<GameState> ExposedStates => _stateStack
+      .TakeWhileInclusive(pair => pair.Modality != Modality.Exclusive)
+      .Select(pair => pair.State);
+
+    /// <summary>Removes all game states from the stack.</summary>
     public void Clear() {
-      while(_activeStates.Count > 0) {
+      while(_stateStack.Count > 0) {
         this.Pop();
       }
     }
 
     /// <inheritdoc />
-    public override GameState Peek() => _activeStates.LastOrDefault()?.State;
+    public override GameState Peek() => _stateStack.LastOrDefault()?.State;
 
     /// <inheritdoc />
-    public override void Push(
-        GameState state,
-        Modality modality = Modality.Exclusive) {
+    public override void Push(GameState state, Modality modality = Modality.Exclusive) {
       state.ThrowIfNull(nameof(state));
-      _activeStates.Add(new GameStateModalityPair(state, modality));
 
-      if(modality == Modality.Exclusive) {
-        _exposedUpdateables.Clear();
-        _exposedDrawables.Clear();
+      foreach (var exposedState in ExposedStates) {
+        exposedState.Obscure(modality == Modality.Exclusive);
       }
 
-      this.AddToEntityList(state);
-      this.NotifyObscuredStates();
-
+      _stateStack.Push(new GameStateModalityPair(state, modality));
       state.Enter();
     }
 
     /// <inheritdoc />
     public override GameState Pop() {
-      if (_activeStates.Count == 0) {
+      if (_stateStack.Count == 0) {
         throw new InvalidOperationException();
       }
 
-      GameStateModalityPair popped = _activeStates.Last();
+      var popped = _stateStack.Pop();
       popped.State.Exit();
-      _activeStates.RemoveAt(_activeStates.Count - 1);
 
-      if(popped.Modality == Modality.Exclusive) {
-        this.RebuildEntityQueues();
-      } else {
-        this.RemoveFromEntities(popped.State);
+      bool completelyRevealed = true;
+      foreach (var exposedState in ExposedStates) {
+        exposedState.Reveal(completelyRevealed);
+        completelyRevealed = false;
       }
 
-      this.NotifyRevealedStates();
       return popped.State;
     }
 
+    /// <summary>Updates all exposed game states.</summary>
     public void Update(GameTime gameTime) {
-      // We need to use a for-loop instead of foreach, because game states may
-      // very well try to change/switch, push or pop states while they are
-      // updating. To prevent an exception from being thrown, we use a for-loop.
-      for(int i = 0; i < _exposedUpdateables.Count; i++) {
-        _exposedUpdateables[i].Update(gameTime);
+      var exposedUpdateables = ExposedStates.OfType<IUpdateable>();
+
+      // Since game states may very well try to change/switch, push or pop
+      // states while they are updating. To prevent an exception from being
+      // thrown, force evalution of the LINQ-expression by using Count().
+      var exposedCount = exposedUpdateables.Count();
+
+      foreach(var updateable in exposedUpdateables) {
+        updateable.Update(gameTime);
       }
     }
 
+    /// <summary>Renders all exposed game states.</summary>
     public void Draw(GameTime gameTime) {
-      foreach(IDrawable drawable in _exposedDrawables) {
+      foreach(var drawable in ExposedStates.OfType<IDrawable>()) {
         drawable.Draw(gameTime);
       }
     }
 
-    private void AddToEntityList(GameState state) {
-      IDrawable drawable = state as IDrawable;
-
-      if(drawable != null) {
-        _exposedDrawables.Add(drawable);
-      }
-
-      IUpdateable updateable = state as IUpdateable;
-
-      if(updateable != null) {
-        _exposedUpdateables.Add(updateable);
-      }
-    }
-
-    private void RemoveFromEntities(GameState state) {
-      var drawable = state as IDrawable;
-
-      if(drawable != null) {
-        _exposedDrawables.RemoveAt(_exposedDrawables.Count - 1);
-      }
-
-      var updateable = state as IUpdateable;
-
-      if(updateable != null) {
-        _exposedUpdateables.RemoveAt(_exposedUpdateables.Count - 1);
-      }
-    }
-
-    private void RebuildEntityQueues() {
-      _exposedUpdateables.Clear();
-      _exposedDrawables.Clear();
-
-      if(_activeStates.Count == 0) {
-        return;
-      }
-
-      var entityStates = _activeStates
-        .AsEnumerable()
-        .Reverse()
-        .TakeWhileInclusive(pair => pair.Modality != Modality.Exclusive);
-
-      foreach(var pair in entityStates) {
-        this.AddToEntityList(pair.State);
-      }
-    }
-
-    /// <summary>
-    ///   Notifies states that have been obscured by a new state.
-    /// </summary>
-    /// <remarks>
-    ///   This method notifies states that have been obscured by a new state.
-    ///   It does not notify all states, but only those who are "above" an
-    ///   exclusive state. The algorithm is inclusive, so the state with
-    ///   exclusive modality is also notified by the obscured call.
-    /// </remarks>
-    private void NotifyObscuredStates() {
-      if(_activeStates.Count <= 1) {
-        return;
-      }
-
-      var obscuredStates = _activeStates
-        .Take(_activeStates.Count - 1)
-        .Reverse()
-        .TakeWhileInclusive(pair => pair.Modality != Modality.Exclusive);
-
-      // We want to notify the states if they have been completely obscured
-      bool completelyObscured = _activeStates.Last().Modality == Modality.Exclusive;
-
-      foreach(var pair in obscuredStates) {
-        pair.State.Obscure(completelyObscured);
-      }
-    }
-
-    /// <summary>
-    ///   Notifies states that have been revealed because of a removed state.
-    /// </summary>
-    private void NotifyRevealedStates() {
-      if(_activeStates.Count == 0) {
-        return;
-      }
-
-      var revealedStates = _activeStates
-        .AsEnumerable()
-        .Reverse()
-        .TakeWhileInclusive(pair => pair.Modality != Modality.Exclusive);
-
-      foreach(var pair in revealedStates) {
-        pair.State.Reveal();
-      }
-    }
-
-    /// <summary>
-    ///   Stores a game state and the modality it was activated with.
-    /// </summary>
+    /// <summary>Stores a game state and the modality it was activated with.</summary>
     internal class GameStateModalityPair : Tuple<GameState, Modality> {
+      /// <summary>Constructs a new pair with a state and modality.</summary>
       public GameStateModalityPair(GameState state, Modality modality) : base(state, modality) {
       }
 
+      /// <summary>Returns the game state.</summary>
       public GameState State => Item1;
 
+      /// <summary>Returns the game state's modality.</summary>
       public Modality Modality => Item2;
     }
   }

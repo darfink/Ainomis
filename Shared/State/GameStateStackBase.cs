@@ -1,5 +1,7 @@
 namespace Ainomis.Shared.State {
-  internal abstract class GameStateStackBase<T> where T : IGameState {
+  using Ainomis.Extensions;
+
+  internal abstract class GameStateStackBase<T> where T : class, IGameState {
     /// <summary>Returns the currently active game state</summary>
     /// <returns>The lastmost game state on the stack</returns>
     public abstract T Peek();
@@ -24,6 +26,7 @@ namespace Ainomis.Shared.State {
     ///   method and return an empty pointer.
     /// </remarks>
     public virtual T Switch(T state, Modality modality = Modality.Exclusive) {
+      state.ThrowIfNull(nameof(state));
       T currentState = this.Peek();
 
       if(currentState != null) {
