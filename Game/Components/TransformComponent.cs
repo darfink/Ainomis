@@ -35,8 +35,7 @@ namespace Ainomis.Game.Components {
     /// <value>The rotation as radians.</value>
     public float RotationAsRadians => (float)Math.PI * this.Rotation / 180f;
 
-    public float GetDistance(TransformComponent transform) {
-      return Vector2.Distance(this.Position, transform.Position);
-    }
+    public float GetDistance(TransformComponent transform) =>
+      Vector2.Distance(this.Position, transform.Position);
   }
 }

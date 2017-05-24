@@ -42,7 +42,7 @@ namespace Ainomis.Shared.Input.Keyboard {
       // true. See: https://msdn.microsoft.com/library/bb548541(v=vs.100).aspx
       if(_currentState.IsKeyDown(keyboardBinding.Key) && keyboardBinding.Modifiers.All(_currentState.IsKeyDown)) {
         if(_keyHeldTimes[keyboardBinding.Key] >= keyboardBinding.Duration) {
-          return keyboardBinding.Timeout.HasValue ? (_keyHeldTimes[keyboardBinding.Key] < keyboardBinding.Timeout.Value) : true;
+          return !keyboardBinding.Timeout.HasValue || (_keyHeldTimes[keyboardBinding.Key] < keyboardBinding.Timeout.Value);
         }
       }
 

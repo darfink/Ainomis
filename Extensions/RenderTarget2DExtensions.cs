@@ -5,9 +5,11 @@ namespace Ainomis.Extensions {
   using Microsoft.Xna.Framework.Graphics;
 
   public static class RenderTarget2DExtensions {
-    public static IDisposable BeginDraw(this RenderTarget2D renderTarget, GraphicsDevice graphicsDevice, Color backgroundColor) {
-      return new RenderTargetOperation(renderTarget, graphicsDevice, backgroundColor);
-    }
+    public static IDisposable BeginDraw(
+      this RenderTarget2D renderTarget,
+      GraphicsDevice graphicsDevice,
+      Color backgroundColor) =>
+      new RenderTargetOperation(renderTarget, graphicsDevice, backgroundColor);
 
     private class RenderTargetOperation : IDisposable {
       private readonly RenderTargetUsage _previousRenderTargetUsage;

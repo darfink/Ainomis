@@ -15,12 +15,8 @@ namespace Ainomis.Shared {
 
     public uint Area => this.Width * this.Height;
 
-    public static implicit operator Vector2(Size size) {
-      return new Vector2(size.Width, size.Height);
-    }
+    public static implicit operator Vector2(Size size) => new Vector2(size.Width, size.Height);
 
-    public bool Equals(Size other) {
-      return this.Width == other.Width && this.Height == other.Height;
-    }
+    public bool Equals(Size other) => this.Width == other.Width && this.Height == other.Height;
   }
 }

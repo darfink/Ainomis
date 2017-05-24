@@ -33,8 +33,6 @@ namespace Ainomis.Game.Components {
     /// Gets the angle as radians.
     /// </summary>
     /// <value>The angle as radians.</value>
-    public float AngleAsRadians {
-      get { return ToRadians * this.Angle; }
-    }
+    public float AngleAsRadians => ToRadians * this.Angle;
   }
 }

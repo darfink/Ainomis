@@ -29,41 +29,37 @@ namespace Ainomis.Game.Manager {
   /// </remarks>
   internal class GameStateStack : GameStateStackBase<GameState>, IDrawable, IUpdateable {
     // Private members
-    private List<GameStateModalityPair> mActiveStates;
-    private List<IUpdateable> mExposedUpdateables;
-    private List<IDrawable> mExposedDrawables;
+    private List<GameStateModalityPair> _activeStates;
+    private List<IUpdateable> _exposedUpdateables;
+    private List<IDrawable> _exposedDrawables;
 
     public GameStateStack() {
-      mActiveStates = new List<GameStateModalityPair>();
-      mExposedUpdateables = new List<IUpdateable>();
-      mExposedDrawables = new List<IDrawable>();
+      _activeStates = new List<GameStateModalityPair>();
+      _exposedUpdateables = new List<IUpdateable>();
+      _exposedDrawables = new List<IDrawable>();
     }
 
     ~GameStateStack() => Clear();
 
     public void Clear() {
-      while(mActiveStates.Count > 0) {
+      while(_activeStates.Count > 0) {
         this.Pop();
       }
     }
 
-    public override GameState Peek() {
-      if(mActiveStates.Count == 0) {
-        return null;
-      } else {
-        return mActiveStates.Last().State;
-      }
-    }
+    /// <inheritdoc />
+    public override GameState Peek() => _activeStates.LastOrDefault()?.State;
 
+    /// <inheritdoc />
     public override void Push(
         GameState state,
         Modality modality = Modality.Exclusive) {
       state.ThrowIfNull(nameof(state));
-      mActiveStates.Add(new GameStateModalityPair(state, modality));
+      _activeStates.Add(new GameStateModalityPair(state, modality));
 
       if(modality == Modality.Exclusive) {
-        mExposedUpdateables.Clear();
-        mExposedDrawables.Clear();
+        _exposedUpdateables.Clear();
+        _exposedDrawables.Clear();
       }
 
       this.AddToEntityList(state);
@@ -72,14 +68,15 @@ namespace Ainomis.Game.Manager {
       state.Enter();
     }
 
+    /// <inheritdoc />
     public override GameState Pop() {
-      if (mActiveStates.Count == 0) {
+      if (_activeStates.Count == 0) {
         throw new InvalidOperationException();
       }
 
-      GameStateModalityPair popped = mActiveStates.Last();
+      GameStateModalityPair popped = _activeStates.Last();
       popped.State.Exit();
-      mActiveStates.RemoveAt(mActiveStates.Count - 1);
+      _activeStates.RemoveAt(_activeStates.Count - 1);
 
       if(popped.Modality == Modality.Exclusive) {
         this.RebuildEntityQueues();
@@ -95,13 +92,13 @@ namespace Ainomis.Game.Manager {
       // We need to use a for-loop instead of foreach, because game states may
       // very well try to change/switch, push or pop states while they are
       // updating. To prevent an exception from being thrown, we use a for-loop.
-      for(int i = 0; i < mExposedUpdateables.Count; i++) {
-        mExposedUpdateables[i].Update(gameTime);
+      for(int i = 0; i < _exposedUpdateables.Count; i++) {
+        _exposedUpdateables[i].Update(gameTime);
       }
     }
 
     public void Draw(GameTime gameTime) {
-      foreach(IDrawable drawable in mExposedDrawables) {
+      foreach(IDrawable drawable in _exposedDrawables) {
         drawable.Draw(gameTime);
       }
     }
@@ -110,13 +107,13 @@ namespace Ainomis.Game.Manager {
       IDrawable drawable = state as IDrawable;
 
       if(drawable != null) {
-        mExposedDrawables.Add(drawable);
+        _exposedDrawables.Add(drawable);
       }
 
       IUpdateable updateable = state as IUpdateable;
 
       if(updateable != null) {
-        mExposedUpdateables.Add(updateable);
+        _exposedUpdateables.Add(updateable);
       }
     }
 
@@ -124,25 +121,25 @@ namespace Ainomis.Game.Manager {
       var drawable = state as IDrawable;
 
       if(drawable != null) {
-        mExposedDrawables.RemoveAt(mExposedDrawables.Count - 1);
+        _exposedDrawables.RemoveAt(_exposedDrawables.Count - 1);
       }
 
       var updateable = state as IUpdateable;
 
       if(updateable != null) {
-        mExposedUpdateables.RemoveAt(mExposedUpdateables.Count - 1);
+        _exposedUpdateables.RemoveAt(_exposedUpdateables.Count - 1);
       }
     }
 
     private void RebuildEntityQueues() {
-      mExposedUpdateables.Clear();
-      mExposedDrawables.Clear();
+      _exposedUpdateables.Clear();
+      _exposedDrawables.Clear();
 
-      if(mActiveStates.Count == 0) {
+      if(_activeStates.Count == 0) {
         return;
       }
 
-      var entityStates = mActiveStates
+      var entityStates = _activeStates
         .AsEnumerable()
         .Reverse()
         .TakeWhileInclusive(pair => pair.Modality != Modality.Exclusive);
@@ -162,17 +159,17 @@ namespace Ainomis.Game.Manager {
     ///   exclusive modality is also notified by the obscured call.
     /// </remarks>
     private void NotifyObscuredStates() {
-      if(mActiveStates.Count <= 1) {
+      if(_activeStates.Count <= 1) {
         return;
       }
 
-      var obscuredStates = mActiveStates
-        .Take(mActiveStates.Count - 1)
+      var obscuredStates = _activeStates
+        .Take(_activeStates.Count - 1)
         .Reverse()
         .TakeWhileInclusive(pair => pair.Modality != Modality.Exclusive);
 
       // We want to notify the states if they have been completely obscured
-      bool completelyObscured = mActiveStates.Last().Modality == Modality.Exclusive;
+      bool completelyObscured = _activeStates.Last().Modality == Modality.Exclusive;
 
       foreach(var pair in obscuredStates) {
         pair.State.Obscure(completelyObscured);
@@ -183,11 +180,11 @@ namespace Ainomis.Game.Manager {
     ///   Notifies states that have been revealed because of a removed state.
     /// </summary>
     private void NotifyRevealedStates() {
-      if(mActiveStates.Count == 0) {
+      if(_activeStates.Count == 0) {
         return;
       }
 
-      var revealedStates = mActiveStates
+      var revealedStates = _activeStates
         .AsEnumerable()
         .Reverse()
         .TakeWhileInclusive(pair => pair.Modality != Modality.Exclusive);

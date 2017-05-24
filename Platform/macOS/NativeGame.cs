@@ -47,14 +47,6 @@ namespace Ainomis.Platform.MacOS {
       base.Initialize();
     }
 
-    protected override void LoadContent() {
-      _ainomisGame.LoadContent(Content);
-    }
-
-    protected override void UnloadContent() {
-      _ainomisGame.UnloadContent(Content);
-    }
-
     protected override void Update(GameTime gameTime) {
       _ainomisGame.Update(gameTime);
       base.Update(gameTime);

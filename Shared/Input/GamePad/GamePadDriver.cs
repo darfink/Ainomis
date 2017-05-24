@@ -8,7 +8,7 @@ namespace Ainomis.Shared.Input.GamePad {
 
   public class GamePadDriver : IInputDriver {
     private readonly Dictionary<Buttons, TimeSpan> _buttonHeldTimes;
-    private Func<GamePadState> _getCurrentState;
+    private readonly Func<GamePadState> _getCurrentState;
     private GamePadState _currentState;
 
     public GamePadDriver(PlayerIndex player) : this(() => GamePad.GetState(player)) {

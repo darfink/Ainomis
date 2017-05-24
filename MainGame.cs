@@ -65,12 +65,6 @@ namespace Ainomis {
       _gameStateManager.Push<GameStates.Menu.MenuState>();
     }
 
-    public void LoadContent(ContentManager content) {
-    }
-
-    public void UnloadContent(ContentManager content) {
-    }
-
     public void Update(GameTime gameTime) {
       // Allow each key binding system to update
       _inputActionBinder.Update(gameTime);
@@ -81,7 +75,7 @@ namespace Ainomis {
 
     public void Draw(GameTime gameTime) {
       // Clear the backbuffer
-      _game.GraphicsDevice.Clear(Color.Black);
+      _game.GraphicsDevice.Clear(Color.Cyan);
 
       // Let the state manager handle the rendering
       _gameStateStack.Draw(gameTime);

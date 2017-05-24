@@ -48,12 +48,8 @@ namespace Ainomis.Shared.Utility {
     /// </summary>
     /// <returns>An object representing the JSON.</returns>
     /// <param name="path">Path.</param>
-    public static T LoadJson<T>(string path) {
-      return JsonConvert.DeserializeObject<T>(LoadString(path));
-    }
+    public static T LoadJson<T>(string path) => JsonConvert.DeserializeObject<T>(LoadString(path));
 
-    private static string GetResourcePath(string path) {
-      return Path.Combine(Settings.ResourcePrefix, path);
-    }
+    private static string GetResourcePath(string path) => Path.Combine(Settings.ResourcePrefix, path);
   }
 }

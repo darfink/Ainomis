@@ -5,8 +5,7 @@ namespace Ainomis.Extensions {
     /// <summary>
     /// Creates a new content manager with identical settings.
     /// </summary>
-    public static ContentManager Allocate(this ContentManager content) {
-      return new ContentManager(content.ServiceProvider, content.RootDirectory);
-    }
+    public static ContentManager Allocate(this ContentManager content) =>
+      new ContentManager(content.ServiceProvider, content.RootDirectory);
   }
 }
