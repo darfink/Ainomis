@@ -23,24 +23,24 @@ namespace Ainomis.Platform.MacOS {
         PreferMultiSampling = true,
       };
 
-      var kab = new KeyActionBinder<GameAction>();
+      var kab = new InputActionBinder<GameAction>();
 
       // Setup the keyboard bindings
-      kab.AddBindingSystem(new KeyboardBindingSystem());
-      kab.AddActionBinding(GameAction.Exit, new KeyboardBinding(Keys.Escape, TimeSpan.FromMilliseconds(100)));
-      kab.AddActionBinding(GameAction.MoveUp, new KeyboardBinding(Keys.W, TimeSpan.FromMilliseconds(100)));
-      kab.AddActionBinding(GameAction.MoveDown, new KeyboardBinding(Keys.S, TimeSpan.FromMilliseconds(100)));
-      kab.AddActionBinding(GameAction.MoveLeft, new KeyboardBinding(Keys.A, TimeSpan.FromMilliseconds(100)));
-      kab.AddActionBinding(GameAction.MoveRight, new KeyboardBinding(Keys.D, TimeSpan.FromMilliseconds(100)));
-      kab.AddActionBinding(GameAction.TapUp, new KeyboardBinding(Keys.W, timeout: TimeSpan.FromMilliseconds(80)));
-      kab.AddActionBinding(GameAction.TapDown, new KeyboardBinding(Keys.S, timeout: TimeSpan.FromMilliseconds(80)));
-      kab.AddActionBinding(GameAction.TapLeft, new KeyboardBinding(Keys.A, timeout: TimeSpan.FromMilliseconds(80)));
-      kab.AddActionBinding(GameAction.TapRight, new KeyboardBinding(Keys.D, timeout: TimeSpan.FromMilliseconds(80)));
+      kab.AddInputDriver(new KeyboardDriver());
+      kab.AddInputBinding(GameAction.Exit, new KeyboardBinding(Keys.Escape, TimeSpan.FromMilliseconds(100)));
+      kab.AddInputBinding(GameAction.MoveUp, new KeyboardBinding(Keys.W, TimeSpan.FromMilliseconds(100)));
+      kab.AddInputBinding(GameAction.MoveDown, new KeyboardBinding(Keys.S, TimeSpan.FromMilliseconds(100)));
+      kab.AddInputBinding(GameAction.MoveLeft, new KeyboardBinding(Keys.A, TimeSpan.FromMilliseconds(100)));
+      kab.AddInputBinding(GameAction.MoveRight, new KeyboardBinding(Keys.D, TimeSpan.FromMilliseconds(100)));
+      kab.AddInputBinding(GameAction.TapUp, new KeyboardBinding(Keys.W, timeout: TimeSpan.FromMilliseconds(80)));
+      kab.AddInputBinding(GameAction.TapDown, new KeyboardBinding(Keys.S, timeout: TimeSpan.FromMilliseconds(80)));
+      kab.AddInputBinding(GameAction.TapLeft, new KeyboardBinding(Keys.A, timeout: TimeSpan.FromMilliseconds(80)));
+      kab.AddInputBinding(GameAction.TapRight, new KeyboardBinding(Keys.D, timeout: TimeSpan.FromMilliseconds(80)));
 
       // Setup the joystick bindings if a controller is connected
-      if (JoystickBindingSystem.IsConnected(PlayerIndex.One)) {
-        kab.AddBindingSystem(new JoystickBindingSystem(PlayerIndex.One));
-        kab.AddActionBinding(GameAction.Start, new JoystickBinding(Buttons.Start));
+      if (JoystickDriver.IsConnected(PlayerIndex.One)) {
+        kab.AddInputDriver(new JoystickDriver(PlayerIndex.One));
+        kab.AddInputBinding(GameAction.Start, new JoystickBinding(Buttons.Start));
       }
 
       // Return control to the platform-agnostic game object

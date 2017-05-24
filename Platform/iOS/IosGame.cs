@@ -18,7 +18,7 @@ namespace Ainomis.Platform.Ios {
         PreferMultiSampling = true,
       };
 
-      var kab = new KeyActionBinder<GameAction>();
+      var kab = new InputActionBinder<GameAction>();
 
       // Return control to the platform-agnostic game object
       _ainomisGame = new MainGame(this, kab);

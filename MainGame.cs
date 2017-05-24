@@ -22,16 +22,16 @@ namespace Ainomis {
   /// </summary>
   public class MainGame {
     // Private members
-    private readonly KeyActionBinder<GameAction> _keyActionBinder;
+    private readonly InputActionBinder<GameAction> _inputActionBinder;
     private readonly XnaGame _game;
     private GameStateManager _gameStateManager;
     private GameStateStack _gameStateStack;
     private DisplayInfo _displayInfo;
     private SpriteBatch _spriteBatch;
 
-    public MainGame(XnaGame game, KeyActionBinder<GameAction> keyActionBinder) {
+    public MainGame(XnaGame game, InputActionBinder<GameAction> inputActionBinder) {
       _gameStateStack = new GameStateStack();
-      _keyActionBinder = keyActionBinder.ThrowIfNull(nameof(keyActionBinder));
+      _inputActionBinder = inputActionBinder.ThrowIfNull(nameof(inputActionBinder));
       _game = game.ThrowIfNull(nameof(game));
 
       // Use the same resource prefix regardless of platform
@@ -73,7 +73,7 @@ namespace Ainomis {
 
     public void Update(GameTime gameTime) {
       // Allow each key binding system to update
-      _keyActionBinder.Update(gameTime);
+      _inputActionBinder.Update(gameTime);
 
       // Let the game state manager update the rest
       _gameStateStack.Update(gameTime);
@@ -98,7 +98,7 @@ namespace Ainomis {
       container.Register(() => _game.Content.Allocate(), Lifestyle.Transient);
       container.Register(() => _gameStateManager, Lifestyle.Singleton);
       container.Register(() => _spriteBatch, Lifestyle.Singleton);
-      container.Register(() => _keyActionBinder, Lifestyle.Singleton);
+      container.Register<IActionSystem<GameAction>>(() => _inputActionBinder, Lifestyle.Singleton);
       container.Register<IDisplayInfo>(() => _displayInfo, Lifestyle.Singleton);
 
       // Register all game states

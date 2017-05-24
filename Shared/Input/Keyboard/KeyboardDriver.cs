@@ -6,43 +6,43 @@ namespace Ainomis.Shared.Input.Keyboard {
   using Microsoft.Xna.Framework;
   using Microsoft.Xna.Framework.Input;
 
-  public class KeyboardBindingSystem : IKeyBindingSystem {
+  public class KeyboardDriver : IInputDriver {
     // Private fields
-    private readonly Dictionary<Keys, TimeSpan> keyHeldTimes;
-    private KeyboardState currentState;
+    private readonly Dictionary<Keys, TimeSpan> _keyHeldTimes;
+    private KeyboardState _currentState;
 
-    public KeyboardBindingSystem() {
-      keyHeldTimes = new Dictionary<Keys, TimeSpan>();
-      currentState = Keyboard.GetState();
+    public KeyboardDriver() {
+      _keyHeldTimes = new Dictionary<Keys, TimeSpan>();
+      _currentState = Keyboard.GetState();
 
       foreach(Keys key in Enum.GetValues(typeof(Keys))) {
         // Initially all keys have been held for zero seconds
-        keyHeldTimes.Add(key, TimeSpan.Zero);
+        _keyHeldTimes.Add(key, TimeSpan.Zero);
       }
     }
 
     public void Update(GameTime gameTime) {
-      currentState = Keyboard.GetState();
+      _currentState = Keyboard.GetState();
 
       foreach(Keys key in Enum.GetValues(typeof(Keys))) {
         // Update the current hold time for each key
-        if(currentState[key] == KeyState.Down) {
-          keyHeldTimes[key] += gameTime.ElapsedGameTime;
+        if(_currentState[key] == KeyState.Down) {
+          _keyHeldTimes[key] += gameTime.ElapsedGameTime;
         } else {
-          keyHeldTimes[key] = TimeSpan.Zero;
+          _keyHeldTimes[key] = TimeSpan.Zero;
         }
       }
     }
 
-    public bool IsBindingActive(IKeyBinding binding) {
+    public bool IsInputActive(IInputBinding binding) {
       var keyboardBinding = (KeyboardBinding)binding;
 
       // Ensure the selected key and all its modifiers are active. If no
       // modifiers are specified, the array will be empty, and 'All' will return
       // true. See: https://msdn.microsoft.com/library/bb548541(v=vs.100).aspx
-      if(currentState.IsKeyDown(keyboardBinding.Key) && keyboardBinding.Modifiers.All(currentState.IsKeyDown)) {
-        if(keyHeldTimes[keyboardBinding.Key] >= keyboardBinding.Duration) {
-          return keyboardBinding.Timeout.HasValue ? (keyHeldTimes[keyboardBinding.Key] < keyboardBinding.Timeout.Value) : true;
+      if(_currentState.IsKeyDown(keyboardBinding.Key) && keyboardBinding.Modifiers.All(_currentState.IsKeyDown)) {
+        if(_keyHeldTimes[keyboardBinding.Key] >= keyboardBinding.Duration) {
+          return keyboardBinding.Timeout.HasValue ? (_keyHeldTimes[keyboardBinding.Key] < keyboardBinding.Timeout.Value) : true;
         }
       }
 

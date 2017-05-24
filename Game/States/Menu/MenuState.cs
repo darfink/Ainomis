@@ -27,9 +27,9 @@ namespace Ainomis.Game.States.Menu {
       ContentManager content,
       GameStateManager gameStateManager,
       SpriteBatch spriteBatch,
-      KeyActionBinder<GameAction> keyActionBinder,
+      InputActionBinder<GameAction> inputActionBinder,
       IDisplayInfo displayInfo) :
-      base(content, gameStateManager, spriteBatch, keyActionBinder, displayInfo) {
+      base(content, gameStateManager, spriteBatch, inputActionBinder, displayInfo) {
     }
 
     public override void Enter() {
@@ -54,7 +54,7 @@ namespace Ainomis.Game.States.Menu {
       _camera.Update(gameTime);
       EntityWorld.Update();
 
-      if (KeyActionBinder.IsActionActivated(GameAction.Start)) {
+      if (ActionSystem.IsActionActivated(GameAction.Start)) {
         GameStateManager.Switch<Explore.ExploreState>();
       }
     }

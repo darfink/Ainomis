@@ -6,13 +6,13 @@ namespace Ainomis.Shared.Input.Joystick {
   using Microsoft.Xna.Framework;
   using Microsoft.Xna.Framework.Input;
 
-  public class JoystickBindingSystem : IKeyBindingSystem {
+  public class JoystickDriver : IInputDriver {
     // Private fields
     private readonly Dictionary<Buttons, TimeSpan> _buttonHeldTimes;
     private GamePadState _currentState;
     private PlayerIndex _playerIndex;
 
-    public JoystickBindingSystem(PlayerIndex player) {
+    public JoystickDriver(PlayerIndex player) {
       _buttonHeldTimes = new Dictionary<Buttons, TimeSpan>();
       _currentState = GamePad.GetState(player);
       _playerIndex = player;
@@ -38,7 +38,7 @@ namespace Ainomis.Shared.Input.Joystick {
       }
     }
 
-    public bool IsBindingActive(IKeyBinding binding) {
+    public bool IsInputActive(IInputBinding binding) {
       var joystickBinding = (JoystickBinding)binding;
 
       // Ensure the selected key and all its modifiers are active. If no

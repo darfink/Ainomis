@@ -37,12 +37,12 @@ namespace Ainomis.Game.Manager {
         ContentManager content,
         GameStateManager gameStateManager,
         SpriteBatch spriteBatch,
-        KeyActionBinder<GameAction> keyActionBinder,
+        IActionSystem<GameAction> actionSystem,
         IDisplayInfo displayInfo) {
       this.Content = content.ThrowIfNull(nameof(content));
       this.GameStateManager = gameStateManager.ThrowIfNull(nameof(gameStateManager));
       this.SpriteBatch = spriteBatch.ThrowIfNull(nameof(spriteBatch));
-      this.KeyActionBinder = keyActionBinder.ThrowIfNull(nameof(keyActionBinder));
+      this.ActionSystem = actionSystem.ThrowIfNull(nameof(actionSystem));
       this.DisplayInfo = displayInfo.ThrowIfNull(nameof(displayInfo));
 
       this.EntityWorld = new EntityWorld();
@@ -56,7 +56,7 @@ namespace Ainomis.Game.Manager {
 
     protected SpriteBatch SpriteBatch { get; set; }
 
-    protected KeyActionBinder<GameAction> KeyActionBinder { get; set; }
+    protected IActionSystem<GameAction> ActionSystem { get; set; }
 
     protected IDisplayInfo DisplayInfo { get; set; }
 

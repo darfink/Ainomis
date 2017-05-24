@@ -3,7 +3,7 @@ namespace Ainomis.Shared.Input.Keyboard {
 
   using Microsoft.Xna.Framework.Input;
 
-  public class KeyboardBinding : IKeyBinding {
+  public class KeyboardBinding : IInputBinding {
     /// <summary>
     /// Initializes a new instance of the <see cref="Ainomis.Input.Keyboard.KeyboardBinding"/> class.
     /// </summary>

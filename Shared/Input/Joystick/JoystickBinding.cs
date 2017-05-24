@@ -3,7 +3,7 @@ namespace Ainomis.Shared.Input.Joystick {
 
   using Microsoft.Xna.Framework.Input;
 
-  public class JoystickBinding : IKeyBinding {
+  public class JoystickBinding : IInputBinding {
     /// <summary>
     /// Initializes a new instance of the <see cref="Ainomis.Input.Joystick.JoystickBinding"/> class.
     /// </summary>

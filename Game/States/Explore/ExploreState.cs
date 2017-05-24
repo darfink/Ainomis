@@ -22,9 +22,9 @@ namespace Ainomis.Game.States.Explore {
       ContentManager content,
       GameStateManager gameStateManager,
       SpriteBatch spriteBatch,
-      KeyActionBinder<GameAction> keyActionBinder,
+      InputActionBinder<GameAction> inputActionBinder,
       IDisplayInfo displayInfo) :
-      base(content, gameStateManager, spriteBatch, keyActionBinder, displayInfo) {
+      base(content, gameStateManager, spriteBatch, inputActionBinder, displayInfo) {
     }
 
     public override void Enter() {
