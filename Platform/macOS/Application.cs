@@ -21,6 +21,18 @@ namespace Ainomis.Platform.MacOS {
     public override bool ApplicationShouldTerminateAfterLastWindowClosed(NSApplication sender) => true;
 
     /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
+    internal static void Main(string[] args) {
+      NSApplication.Init();
+
+      using(var p = new NSAutoreleasePool()) {
+        NSApplication.SharedApplication.Delegate = new Application();
+        NSApplication.Main(args);
+      }
+    }
+
+    /// <summary>
     /// Adds menu items and shortcuts to the game window.
     /// </summary>
     private void SetupMainMenu() {
@@ -33,18 +45,6 @@ namespace Ainomis.Platform.MacOS {
       var quitMenuItem = new NSMenuItem("Quit", "q", (sender, e) => NSApplication.SharedApplication.Terminate(this));
       appMenu.AddItem(quitMenuItem);
       appMenuItem.Submenu = appMenu;
-    }
-
-    /// <summary>
-    /// The main entry point for the application.
-    /// </summary>
-    internal static void Main(string[] args) {
-      NSApplication.Init();
-
-      using(var p = new NSAutoreleasePool()) {
-        NSApplication.SharedApplication.Delegate = new Application();
-        NSApplication.Main(args);
-      }
     }
   }
 }

@@ -40,7 +40,7 @@ namespace Ainomis.Game.Manager {
 
     /// <summary>Removes all game states from the stack.</summary>
     public void Clear() {
-      while(_stateStack.Count > 0) {
+      while (_stateStack.Count > 0) {
         this.Pop();
       }
     }
@@ -87,14 +87,14 @@ namespace Ainomis.Game.Manager {
       // thrown, force evalution of the LINQ-expression by using Count().
       var exposedCount = exposedUpdateables.Count();
 
-      foreach(var updateable in exposedUpdateables) {
+      foreach (var updateable in exposedUpdateables) {
         updateable.Update(gameTime);
       }
     }
 
     /// <summary>Renders all exposed game states.</summary>
     public void Draw(GameTime gameTime) {
-      foreach(var drawable in ExposedStates.OfType<IDrawable>()) {
+      foreach (var drawable in ExposedStates.OfType<IDrawable>()) {
         drawable.Draw(gameTime);
       }
     }

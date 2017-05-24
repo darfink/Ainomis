@@ -26,13 +26,13 @@ namespace Ainomis.Platform.MacOS {
       var iab = new InputActionBinder<GameAction>();
 
       // Always configure keyboard input on desktop
-			iab.AddInputDriver(new KeyboardDriver());
+      iab.AddInputDriver(new KeyboardDriver());
       ConfigureKeyboardInput(iab);
 
       // Configure the game pad only if one is connected
       if (GamePadDriver.IsConnected(PlayerIndex.One)) {
-				iab.AddInputDriver(new GamePadDriver(PlayerIndex.One));
-				ConfigureGamePadInput(iab);
+        iab.AddInputDriver(new GamePadDriver(PlayerIndex.One));
+        ConfigureGamePadInput(iab);
       }
 
       // Return control to the platform-agnostic game object
