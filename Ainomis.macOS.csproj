@@ -8,7 +8,7 @@
     <ProjectGuid>{D5B23A3F-536B-455B-A05A-87C9B2FA5DB0}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Ainomis</RootNamespace>
-    <MonoMacResourcePrefix>Platform\macOS</MonoMacResourcePrefix>
+    <MonoMacResourcePrefix>Platform\macOS\Resources</MonoMacResourcePrefix>
     <AssemblyName>AinomisMac</AssemblyName>
     <MonoGamePlatform>MacOSX</MonoGamePlatform>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -110,6 +110,9 @@
       </PropertyGroup>
     </When>
   </Choose>
+  <PropertyGroup>
+    <MonoMacSourcePrefix>Platform\macOS</MonoMacSourcePrefix>
+  </PropertyGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.macOS.mgcb" />
     <None Include="Content\Menu\Background.jpg" />
@@ -124,8 +127,8 @@
   <ItemGroup>
     <None Include="packages.Ainomis.macOS.config" />
     <None Include="$(MonoMacResourcePrefix)\Info.plist" />
-    <Compile Include="$(MonoMacResourcePrefix)\Application.cs" />
-    <Compile Include="$(MonoMacResourcePrefix)\MacGame.cs" />
+    <Compile Include="$(MonoMacSourcePrefix)\Application.cs" />
+    <Compile Include="$(MonoMacSourcePrefix)\MacGame.cs" />
     <InterfaceDefinition Include="$(MonoMacResourcePrefix)\MainMenu.xib" />
   </ItemGroup>
   <!-- The FNA project version still depends on MonoGame for the pipeline -->
