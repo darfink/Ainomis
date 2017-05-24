@@ -24,15 +24,14 @@ namespace Ainomis.Shared.Input {
     public void AddInputDriver(IInputDriver system) {
       Type bindingType = system.GetBindingType();
 
-      /*if (!(bindingType is IInputBinding))
-      {
+      if (!typeof(IInputBinding).IsAssignableFrom(bindingType)) {
         // Ensure that this system implements the IBinding support
-        throw new Exception("The system does not implement binding interface support");
-      }*/
+        throw new ArgumentException("The system does not implement input binding support", nameof(system));
+      }
 
       // Multiple systems cannot be registered for a single type
-      if(_inputDrivers.ContainsKey(bindingType)) {
-        throw new Exception("A system is already registered for this type");
+      if (_inputDrivers.ContainsKey(bindingType)) {
+        throw new ArgumentException("A system is already registered for this type", nameof(system));
       }
 
       // Add the system to our system list
@@ -47,11 +46,11 @@ namespace Ainomis.Shared.Input {
     public void AddInputBinding(T action, IInputBinding binding) {
       Type derivedType = binding.GetType();
 
-      if(!_inputDrivers.ContainsKey(derivedType)) {
-        throw new Exception("No system is registered for this binding type");
+      if (!_inputDrivers.ContainsKey(derivedType)) {
+        throw new NotSupportedException("No system is registered for this binding type");
       }
 
-      if(!_actionBindings.ContainsKey(action)) {
+      if (!_actionBindings.ContainsKey(action)) {
         // Create the binding list if not already created
         _actionBindings[action] = new List<IInputBinding>();
       }
@@ -62,7 +61,7 @@ namespace Ainomis.Shared.Input {
     /// <inheritdoc />
     public bool IsActionActivated(T action) {
       List<IInputBinding> bindings;
-      if(_actionBindings.TryGetValue(action, out bindings)) {
+      if (_actionBindings.TryGetValue(action, out bindings)) {
         return bindings.Any((binding) => _inputDrivers[binding.GetType()].IsInputActive(binding));
       }
 
@@ -70,7 +69,7 @@ namespace Ainomis.Shared.Input {
     }
 
     public void Update(GameTime gameTime) {
-      foreach(var driver in _inputDrivers) {
+      foreach (var driver in _inputDrivers) {
         driver.Value.Update(gameTime);
       }
     }
