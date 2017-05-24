@@ -124,9 +124,8 @@
   <ItemGroup>
     <None Include="packages.Ainomis.macOS.config" />
     <None Include="$(MonoMacResourcePrefix)\Info.plist" />
-    <Compile Include="$(MonoMacResourcePrefix)\AppDelegate.cs" />
+    <Compile Include="$(MonoMacResourcePrefix)\Application.cs" />
     <Compile Include="$(MonoMacResourcePrefix)\MacGame.cs" />
-    <Compile Include="$(MonoMacResourcePrefix)\Main.cs" />
     <InterfaceDefinition Include="$(MonoMacResourcePrefix)\MainMenu.xib" />
   </ItemGroup>
   <!-- The FNA project version still depends on MonoGame for the pipeline -->
