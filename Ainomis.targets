@@ -14,8 +14,8 @@
     <ExternalCompile Include="Shared\Input\IInputBinding.cs" />
     <ExternalCompile Include="Shared\Input\IInputDriver.cs" />
     <ExternalCompile Include="Shared\Input\InputActionBinder.cs" />
-    <ExternalCompile Include="Shared\Input\Joystick\JoystickBinding.cs" />
-    <ExternalCompile Include="Shared\Input\Joystick\JoystickDriver.cs" />
+    <ExternalCompile Include="Shared\Input\GamePad\GamePadBinding.cs" />
+    <ExternalCompile Include="Shared\Input\GamePad\GamePadDriver.cs" />
     <ExternalCompile Include="Shared\Input\Keyboard\KeyboardBinding.cs" />
     <ExternalCompile Include="Shared\Input\Keyboard\KeyboardDriver.cs" />
     <ExternalCompile Include="Shared\State\GameStateStackBase.cs" />
@@ -40,6 +40,7 @@
     <ExternalCompile Include="Extensions\SpriteBatchExtensions.cs" />
     <ExternalCompile Include="Extensions\StringExtensions.cs" />
     <ExternalCompile Include="MainGame.cs" />
+    <ExternalCompile Include="Game\Resources\Area.cs" />
     <ExternalCompile Include="Game\Resources\Tileset.cs" />
     <ExternalCompile Include="Game\States\Explore\ExploreState.cs" />
     <ExternalCompile Include="Game\States\Menu\MenuState.cs" />

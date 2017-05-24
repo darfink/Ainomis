@@ -1,15 +1,15 @@
-namespace Ainomis.Shared.Input.Joystick {
+namespace Ainomis.Shared.Input.GamePad {
   using System;
 
   using Microsoft.Xna.Framework.Input;
 
-  public class JoystickBinding : IInputBinding {
+  public class GamePadBinding : IInputBinding {
     /// <summary>
-    /// Initializes a new instance of the <see cref="Ainomis.Input.Joystick.JoystickBinding"/> class.
+    /// Initializes a new instance of the GamePadBinding class.
     /// </summary>
     /// <param name="button">Button.</param>
     /// <param name="duration">Duration.</param>
-    public JoystickBinding(Buttons button, TimeSpan duration = new TimeSpan(), TimeSpan? timeout = null) {
+    public GamePadBinding(Buttons button, TimeSpan duration = new TimeSpan(), TimeSpan? timeout = null) {
       this.Duration = duration;
       this.Button = button;
 

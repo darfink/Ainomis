@@ -6,10 +6,10 @@ namespace Ainomis.Platform.Ios {
   // User Interface of the application, as well as listening (and optionally responding) to application events from iOS.
   [Register("AppDelegate")]
   public class Application : UIApplicationDelegate {
-    private IosGame _game;
+    private NativeGame _game;
 
     public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions) {
-      _game = new IosGame();
+      _game = new NativeGame();
       _game.Run();
 
       return true;
@@ -42,6 +42,9 @@ namespace Ainomis.Platform.Ios {
       _game.Dispose();
     }
 
+    /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
     internal static void Main(string[] args) {
       UIApplication.Main(args, null, "AppDelegate");
     }

@@ -10,7 +10,7 @@ namespace Ainomis.Platform.MacOS {
     public override void DidFinishLaunching(NSNotification notification) {
       this.SetupMainMenu();
 
-      using (var game = new MacGame()) {
+      using (var game = new NativeGame()) {
         game.Run();
       }
     }

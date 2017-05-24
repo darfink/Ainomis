@@ -128,7 +128,7 @@
   <ItemGroup>
     <None Include="packages.Ainomis.iOS.config" />
     <Compile Include="$(IPhoneSourcePrefix)\Application.cs" />
-    <Compile Include="$(IPhoneSourcePrefix)\IosGame.cs" />
+    <Compile Include="$(IPhoneSourcePrefix)\NativeGame.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\Current\MonoGame.Content.Builder.targets" />

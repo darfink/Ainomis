@@ -1,4 +1,4 @@
-namespace Ainomis.Shared.Input.Joystick {
+namespace Ainomis.Shared.Input.GamePad {
   using System;
   using System.Collections.Generic;
   using System.Linq;
@@ -6,16 +6,18 @@ namespace Ainomis.Shared.Input.Joystick {
   using Microsoft.Xna.Framework;
   using Microsoft.Xna.Framework.Input;
 
-  public class JoystickDriver : IInputDriver {
-    // Private fields
+  public class GamePadDriver : IInputDriver {
     private readonly Dictionary<Buttons, TimeSpan> _buttonHeldTimes;
+    private Func<GamePadState> _getCurrentState;
     private GamePadState _currentState;
-    private PlayerIndex _playerIndex;
 
-    public JoystickDriver(PlayerIndex player) {
+    public GamePadDriver(PlayerIndex player) : this(() => GamePad.GetState(player)) {
+    }
+
+    public GamePadDriver(Func<GamePadState> getCurrentState) {
       _buttonHeldTimes = new Dictionary<Buttons, TimeSpan>();
-      _currentState = GamePad.GetState(player);
-      _playerIndex = player;
+      _getCurrentState = getCurrentState;
+      _currentState = getCurrentState();
 
       foreach(var button in Enum.GetValues(typeof(Buttons))) {
         // Initially all keys have been held for zero seconds
@@ -26,7 +28,7 @@ namespace Ainomis.Shared.Input.Joystick {
     public static bool IsConnected(PlayerIndex player) => GamePad.GetState(player).IsConnected;
 
     public void Update(GameTime gameTime) {
-      _currentState = GamePad.GetState(_playerIndex);
+      _currentState = _getCurrentState();
 
       foreach(Buttons button in Enum.GetValues(typeof(Buttons))) {
         // Update the current hold time for each key
@@ -39,11 +41,8 @@ namespace Ainomis.Shared.Input.Joystick {
     }
 
     public bool IsInputActive(IInputBinding binding) {
-      var joystickBinding = (JoystickBinding)binding;
+      var joystickBinding = (GamePadBinding)binding;
 
-      // Ensure the selected key and all its modifiers are active. If no
-      // modifiers are specified, the array will be empty, and 'All' will return
-      // true. See: https://msdn.microsoft.com/library/bb548541(v=vs.100).aspx
       if(_currentState.IsButtonDown(joystickBinding.Button)) {
         if(_buttonHeldTimes[joystickBinding.Button] >= joystickBinding.Duration) {
           return !joystickBinding.Timeout.HasValue || (_buttonHeldTimes[joystickBinding.Button] < joystickBinding.Timeout.Value);
@@ -53,6 +52,6 @@ namespace Ainomis.Shared.Input.Joystick {
       return false;
     }
 
-    public Type GetBindingType() => typeof(JoystickBinding);
+    public Type GetBindingType() => typeof(GamePadBinding);
   }
 }

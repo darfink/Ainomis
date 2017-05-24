@@ -6,16 +6,17 @@ namespace Ainomis.Platform.Ios {
 
   using GameAction = Ainomis.Game.Action;
 
-  public class IosGame : Game {
+  public class NativeGame : Game {
     // Private members
     private readonly MainGame _ainomisGame;
 
-    public IosGame() {
+    public NativeGame() {
       // Create the graphics device
       this.Graphics = new GraphicsDeviceManager(this) {
         IsFullScreen = Settings.Fullscreen,
-        SynchronizeWithVerticalRetrace = true,
         PreferMultiSampling = true,
+        SupportedOrientations = DisplayOrientation.LandscapeLeft | DisplayOrientation.LandscapeRight,
+        SynchronizeWithVerticalRetrace = true,
       };
 
       var kab = new InputActionBinder<GameAction>();
