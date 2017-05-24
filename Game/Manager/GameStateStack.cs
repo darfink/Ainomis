@@ -27,7 +27,7 @@ namespace Ainomis.Game.Manager {
   ///     very cheap frame-by-frame processing.
   ///   </para>
   /// </remarks>
-  internal class GameStateStack : GameStateStackBase, IDrawable, IUpdateable {
+  internal class GameStateStack : GameStateStackBase<GameState>, IDrawable, IUpdateable {
     // Private members
     private List<GameStateModalityPair> mActiveStates;
     private List<IUpdateable> mExposedUpdateables;
@@ -47,7 +47,7 @@ namespace Ainomis.Game.Manager {
       }
     }
 
-    public override IGameState Peek() {
+    public override GameState Peek() {
       if(mActiveStates.Count == 0) {
         return null;
       } else {
@@ -56,10 +56,10 @@ namespace Ainomis.Game.Manager {
     }
 
     public override void Push(
-        IGameState state,
+        GameState state,
         Modality modality = Modality.Exclusive) {
       state.ThrowIfNull(nameof(state));
-      mActiveStates.Add(new GameStateModalityPair(state as GameState, modality));
+      mActiveStates.Add(new GameStateModalityPair(state, modality));
 
       if(modality == Modality.Exclusive) {
         mExposedUpdateables.Clear();
@@ -69,10 +69,10 @@ namespace Ainomis.Game.Manager {
       this.AddToEntityList(state);
       this.NotifyObscuredStates();
 
-      (state as GameState).Enter();
+      state.Enter();
     }
 
-    public override IGameState Pop() {
+    public override GameState Pop() {
       if (mActiveStates.Count == 0) {
         throw new InvalidOperationException();
       }
@@ -106,7 +106,7 @@ namespace Ainomis.Game.Manager {
       }
     }
 
-    private void AddToEntityList(IGameState state) {
+    private void AddToEntityList(GameState state) {
       IDrawable drawable = state as IDrawable;
 
       if(drawable != null) {
@@ -120,7 +120,7 @@ namespace Ainomis.Game.Manager {
       }
     }
 
-    private void RemoveFromEntities(IGameState state) {
+    private void RemoveFromEntities(GameState state) {
       var drawable = state as IDrawable;
 
       if(drawable != null) {

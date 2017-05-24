@@ -9,7 +9,7 @@ namespace Ainomis.Platform.MacOS {
   using Microsoft.Xna.Framework;
   using Microsoft.Xna.Framework.Input;
 
-  using GameAction = Ainomis.Game.Action;
+  using GameAction = Game.Action;
 
   public class NativeGame : Game {
     // Private members
@@ -29,7 +29,7 @@ namespace Ainomis.Platform.MacOS {
 			iab.AddInputDriver(new KeyboardDriver());
       ConfigureKeyboardInput(iab);
 
-      // Configure the game pad if one is connected
+      // Configure the game pad only if one is connected
       if (GamePadDriver.IsConnected(PlayerIndex.One)) {
 				iab.AddInputDriver(new GamePadDriver(PlayerIndex.One));
 				ConfigureGamePadInput(iab);

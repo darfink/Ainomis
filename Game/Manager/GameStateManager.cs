@@ -29,7 +29,7 @@ namespace Ainomis.Game.Manager {
     /// Pops the current game state from the stack.
     /// </summary>
     /// <returns>The old game state.</returns>
-    public GameState Pop() => _stateStack.Pop() as GameState;
+    public GameState Pop() => _stateStack.Pop();
 
     /// <summary>
     /// Switches the current game state with another.
@@ -38,6 +38,6 @@ namespace Ainomis.Game.Manager {
     /// <param name="modality">Modality.</param>
     /// <typeparam name="T">The game state type.</typeparam>
     public GameState Switch<T>(Modality modality = Modality.Exclusive) where T : GameState =>
-      _stateStack.Switch(_container.GetInstance<T>(), modality) as GameState;
+      _stateStack.Switch(_container.GetInstance<T>(), modality);
   }
 }

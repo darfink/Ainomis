@@ -5,7 +5,7 @@ namespace Ainomis.Shared.Camera {
 
   public class Camera2D : ICamera2D, Common.IUpdateable {
     // Private members
-    private Vector2 mPosition;
+    private Vector2 _position;
 
     public Camera2D(Vector2 relativeScale) {
       this.RelativeScale = relativeScale;
@@ -15,8 +15,8 @@ namespace Ainomis.Shared.Camera {
     }
 
     public Vector2 Position {
-      get { return mPosition; }
-      set { mPosition = value; }
+      get { return _position; }
+      set { _position = value; }
     }
 
     public Vector2 RelativeScale { get; set; }
@@ -77,8 +77,8 @@ namespace Ainomis.Shared.Camera {
         // Move the camera using fluid animations
         float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        mPosition.X += (this.Focus.Position.X - this.Position.X) * this.MoveSpeed * delta;
-        mPosition.Y += (this.Focus.Position.Y - this.Position.Y) * this.MoveSpeed * delta;
+        _position.X += (this.Focus.Position.X - this.Position.X) * this.MoveSpeed * delta;
+        _position.Y += (this.Focus.Position.Y - this.Position.Y) * this.MoveSpeed * delta;
       }
     }
 
