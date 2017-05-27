@@ -12,7 +12,7 @@ namespace Ainomis {
         this SpriteBatch spriteBatch,
         Matrix matrix) {
       spriteBatch.Begin(
-        SpriteSortMode.FrontToBack,
+        SpriteSortMode.BackToFront,
         BlendState.AlphaBlend,
         SamplerState.LinearWrap,
         DepthStencilState.Default,

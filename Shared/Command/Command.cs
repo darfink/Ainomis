@@ -1,11 +1,11 @@
-namespace Ainomis.Game {
+namespace Ainomis.Shared.Command {
   using System;
 
   /// <summary>
   /// Describes an action that can be triggered by a player or AI.
   /// </summary>
   [Flags]
-  public enum Action {
+  public enum Command {
     // Default
     None = 0,
 
@@ -37,9 +37,9 @@ namespace Ainomis.Game {
     MoveRight = (Move | Right),
 
     // Sprint aliases
-    SprintUp    = (MoveUp | Run),
-    SprintDown  = (MoveDown | Run),
-    SprintLeft  = (MoveLeft | Run),
-    SprintRight = (MoveRight | Run),
+    RunUp    = (MoveUp | Run),
+    RunDown  = (MoveDown | Run),
+    RunLeft  = (MoveLeft | Run),
+    RunRight = (MoveRight | Run),
   }
 }

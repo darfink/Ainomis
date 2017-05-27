@@ -3,8 +3,8 @@ namespace Ainomis.Game.States.Menu {
   using Ainomis.Game.Manager;
   using Ainomis.Game.Systems;
   using Ainomis.Shared.Camera;
+  using Ainomis.Shared.Command;
   using Ainomis.Shared.Display;
-  using Ainomis.Shared.Input;
 
   using Artemis;
   using Artemis.Manager;
@@ -15,7 +15,6 @@ namespace Ainomis.Game.States.Menu {
   using Microsoft.Xna.Framework.Media;
 
   using Common = Shared.Common;
-  using GameAction = Game.Action;
 
   internal class MenuState : GameState, Common.IDrawable, Common.IUpdateable {
     // Private members
@@ -27,9 +26,9 @@ namespace Ainomis.Game.States.Menu {
       ContentManager content,
       GameStateManager gameStateManager,
       SpriteBatch spriteBatch,
-      InputActionBinder<GameAction> inputActionBinder,
+      ICommandSystem commandSystem,
       IDisplayInfo displayInfo) :
-      base(content, gameStateManager, spriteBatch, inputActionBinder, displayInfo) {
+      base(content, gameStateManager, spriteBatch, commandSystem, displayInfo) {
     }
 
     public override void Enter() {
@@ -39,7 +38,7 @@ namespace Ainomis.Game.States.Menu {
       MediaPlayer.IsRepeating = true;
       MediaPlayer.Play(_backgroundMusic);
 
-      this.SetupBackground(EntityWorld.CreateEntity()).Refresh();
+      this.LoadBackground(EntityWorld.CreateEntity()).Refresh();
     }
 
     public override void Exit() {
@@ -54,7 +53,7 @@ namespace Ainomis.Game.States.Menu {
       _camera.Update(gameTime);
       EntityWorld.Update();
 
-      if (ActionSystem.IsActionActivated(GameAction.Start)) {
+      if (CommandSystem.IsCommandActivated(Command.Start)) {
         GameStateManager.Switch<Explore.ExploreState>();
       }
     }
@@ -89,7 +88,7 @@ namespace Ainomis.Game.States.Menu {
       SpriteBatch.DrawString(_backgroundFont, message, messagePosition, Color.WhiteSmoke);
     }
 
-    private Entity SetupBackground(Entity entity) {
+    private Entity LoadBackground(Entity entity) {
       var texture = Content.Load<Texture2D>("Menu/Background");
 
       entity.AddComponent(new TextureComponent(texture));

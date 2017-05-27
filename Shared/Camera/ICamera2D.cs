@@ -5,7 +5,7 @@ namespace Ainomis.Shared.Camera {
   public interface ICamera2D {
     /// <summary>Gets or sets the position of the camera.</summary>
     /// <value>The position.</value>
-    Vector2 Position { get; set; }
+    ref Vector2 Position { get; }
 
     /// <summary>
     ///   Gets or sets the move speed of the camera.

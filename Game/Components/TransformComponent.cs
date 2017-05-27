@@ -8,6 +8,8 @@ namespace Ainomis.Game.Components {
   using Microsoft.Xna.Framework;
 
   internal class TransformComponent : IComponent, IFocusable {
+    private Vector2 _position;
+
     public TransformComponent(Vector2 position, float rotation = 0f) {
       this.Rotation = rotation;
       this.Position = position;
@@ -17,24 +19,19 @@ namespace Ainomis.Game.Components {
         this(new Vector2(x, y), rotation) {
     }
 
-    /// <summary>
-    /// Gets or sets the position.
-    /// </summary>
+    /// <summary>Gets or sets the position.</summary>
     /// <value>The position.</value>
-    public Vector2 Position { get; set; }
+    public ref Vector2 Position => ref _position;
 
-    /// <summary>
-    /// Gets or sets the rotation.
-    /// </summary>
+    /// <summary>Gets or sets the rotation.</summary>
     /// <value>The rotation.</value>
     public float Rotation { get; set; }
 
-    /// <summary>
-    /// Gets the rotation as radians.
-    /// </summary>
+    /// <summary>Gets the rotation as radians.</summary>
     /// <value>The rotation as radians.</value>
     public float RotationAsRadians => (float)Math.PI * this.Rotation / 180f;
 
+    /// <summary>Gets the distance between this component and another.</summary>
     public float GetDistance(TransformComponent transform) =>
       Vector2.Distance(this.Position, transform.Position);
   }

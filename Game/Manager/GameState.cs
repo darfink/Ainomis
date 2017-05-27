@@ -1,7 +1,7 @@
 namespace Ainomis.Game.Manager {
   using Ainomis.Extensions;
+  using Ainomis.Shared.Command;
   using Ainomis.Shared.Display;
-  using Ainomis.Shared.Input;
   using Ainomis.Shared.State;
 
   using Artemis;
@@ -9,8 +9,6 @@ namespace Ainomis.Game.Manager {
 
   using Microsoft.Xna.Framework.Content;
   using Microsoft.Xna.Framework.Graphics;
-
-  using GameAction = Game.Action;
 
   /// <summary>Abstracts a state the game can be in.</summary>
   /// <remarks>
@@ -37,12 +35,12 @@ namespace Ainomis.Game.Manager {
         ContentManager content,
         GameStateManager gameStateManager,
         SpriteBatch spriteBatch,
-        IActionSystem<GameAction> actionSystem,
+        ICommandSystem commandSystem,
         IDisplayInfo displayInfo) {
       this.Content = content.ThrowIfNull(nameof(content));
       this.GameStateManager = gameStateManager.ThrowIfNull(nameof(gameStateManager));
       this.SpriteBatch = spriteBatch.ThrowIfNull(nameof(spriteBatch));
-      this.ActionSystem = actionSystem.ThrowIfNull(nameof(actionSystem));
+      this.CommandSystem = commandSystem.ThrowIfNull(nameof(commandSystem));
       this.DisplayInfo = displayInfo.ThrowIfNull(nameof(displayInfo));
 
       this.EntityWorld = new EntityWorld();
@@ -56,7 +54,7 @@ namespace Ainomis.Game.Manager {
 
     protected SpriteBatch SpriteBatch { get; set; }
 
-    protected IActionSystem<GameAction> ActionSystem { get; set; }
+    protected ICommandSystem CommandSystem { get; set; }
 
     protected IDisplayInfo DisplayInfo { get; set; }
 

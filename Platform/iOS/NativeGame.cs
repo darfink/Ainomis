@@ -4,8 +4,6 @@ namespace Ainomis.Platform.Ios {
 
   using Microsoft.Xna.Framework;
 
-  using GameAction = Ainomis.Game.Action;
-
   public class NativeGame : Game {
     // Private members
     private readonly MainGame _ainomisGame;
@@ -19,7 +17,7 @@ namespace Ainomis.Platform.Ios {
         SynchronizeWithVerticalRetrace = true,
       };
 
-      var kab = new InputActionBinder<GameAction>();
+      var kab = new InputActionBinder();
 
       // Return control to the platform-agnostic game object
       _ainomisGame = new MainGame(this, kab);

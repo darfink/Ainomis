@@ -8,6 +8,6 @@ namespace Ainomis.Shared.Camera {
   /// Represents a focusable object
   /// </summary>
   public interface IFocusable {
-    Vector2 Position { get; }
+    ref Vector2 Position { get; }
   }
 }

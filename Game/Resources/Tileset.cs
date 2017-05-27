@@ -26,9 +26,7 @@ namespace Ainomis.Game.Resources {
 
     public uint FirstGid { get; set; }
 
-    /// <summary>
-    /// Retrieves a tile's source rectangle.
-    /// </summary>
+    /// <summary>Retrieves a tile's source rectangle.</summary>
     /// <returns>The tile's source rectangle.</returns>
     /// <param name="index">Tile index.</param>
     public Rectangle GetSourceRectangleForTile(uint index) {

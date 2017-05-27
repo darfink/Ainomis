@@ -8,33 +8,32 @@ namespace Ainomis.Game.Systems {
   using Microsoft.Xna.Framework;
   using Microsoft.Xna.Framework.Graphics;
 
-  /// <summary>
-  /// Tileset render system.
-  /// </summary>
+  /// <summary>Basic render system.</summary>
   internal class BasicRenderSystem : EntityProcessingSystem {
+    // To be included in the basic render system, an entity must include a
+    // texture and a transform component.
     public static readonly Aspect Requirement = Aspect
-      .All(typeof(TextureComponent), typeof(TransformComponent));
+      .All(typeof(TextureComponent), typeof(TransformComponent))
+      .GetExclude(typeof(States.Explore.Components.AreaComponent));
 
     // Class properties
     private SpriteBatch _spriteBatch;
     private SpriteComponent _defaultSprite;
 
-    // To be included in the basic render system, an entity must include a
-    // texture and a transform component.
     public BasicRenderSystem(SpriteBatch spriteBatch) : base(Requirement) {
       _defaultSprite = new SpriteComponent();
       _spriteBatch = spriteBatch.ThrowIfNull(nameof(spriteBatch));
     }
 
     public override void Process(Entity entity) {
-      TransformComponent transform = entity.GetComponent<TransformComponent>();
-      TextureComponent texture = entity.GetComponent<TextureComponent>();
+      var transform = entity.GetComponent<TransformComponent>();
+      var texture = entity.GetComponent<TextureComponent>();
 
       // The sprite component is not required for rendering
-      SpriteComponent sprite = entity.GetComponent<SpriteComponent>() ?? _defaultSprite;
+      var sprite = entity.GetComponent<SpriteComponent>() ?? _defaultSprite;
 
       // The tileset component is optional as well
-      TilesetComponent tileset = entity.GetComponent<TilesetComponent>();
+      var tileset = entity.GetComponent<TilesetComponent>();
 
       // In case a tileset is provided, its source rectangle overrides the
       // sprite's source rectangle. All other options are used as default.
@@ -48,7 +47,7 @@ namespace Ainomis.Game.Systems {
           transform.Rotation,
           sprite.Origin,
           sprite.Scale,
-          sprite.Mirroring,
+          sprite.Effects,
           sprite.Layer);
     }
   }

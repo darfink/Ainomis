@@ -2,6 +2,7 @@ namespace Ainomis {
   using Ainomis.Extensions;
   using Ainomis.Game.Manager;
   using Ainomis.Shared;
+  using Ainomis.Shared.Command;
   using Ainomis.Shared.Display;
   using Ainomis.Shared.Input;
   using Ainomis.Shared.Utility;
@@ -9,30 +10,31 @@ namespace Ainomis {
   using Microsoft.Xna.Framework;
   using Microsoft.Xna.Framework.Content;
   using Microsoft.Xna.Framework.Graphics;
+  using Microsoft.Xna.Framework.Media;
 
   using SimpleInjector;
   using SimpleInjector.Diagnostics;
 
-  using GameAction = Game.Action;
   using GameStates = Game.States;
   using XnaGame = Microsoft.Xna.Framework.Game;
 
-  /// <summary>
-  /// Game bootstrapper
-  /// </summary>
+  /// <summary>Game bootstrapper.</summary>
   public class MainGame {
     // Private members
-    private readonly InputActionBinder<GameAction> _inputActionBinder;
+    private readonly InputActionBinder _inputActionBinder;
     private readonly XnaGame _game;
     private GameStateManager _gameStateManager;
     private GameStateStack _gameStateStack;
     private DisplayInfo _displayInfo;
     private SpriteBatch _spriteBatch;
 
-    public MainGame(XnaGame game, InputActionBinder<GameAction> inputActionBinder) {
+    public MainGame(XnaGame game, InputActionBinder inputActionBinder) {
       _gameStateStack = new GameStateStack();
       _inputActionBinder = inputActionBinder.ThrowIfNull(nameof(inputActionBinder));
       _game = game.ThrowIfNull(nameof(game));
+
+      // Use the user defined music volume by default
+      MediaPlayer.Volume = Settings.MusicVolume;
 
       // Use the same resource prefix regardless of platform
       _game.Content.RootDirectory = Settings.ResourcePrefix;
@@ -62,7 +64,7 @@ namespace Ainomis {
       InitializeFactory();
 
       // The first game state is the menu
-      _gameStateManager.Push<GameStates.Menu.MenuState>();
+      _gameStateManager.Push<GameStates.Explore.ExploreState>();
     }
 
     public void Update(GameTime gameTime) {
@@ -92,7 +94,7 @@ namespace Ainomis {
       container.Register(() => _game.Content.Allocate(), Lifestyle.Transient);
       container.Register(() => _gameStateManager, Lifestyle.Singleton);
       container.Register(() => _spriteBatch, Lifestyle.Singleton);
-      container.Register<IActionSystem<GameAction>>(() => _inputActionBinder, Lifestyle.Singleton);
+      container.Register<ICommandSystem>(() => _inputActionBinder, Lifestyle.Singleton);
       container.Register<IDisplayInfo>(() => _displayInfo, Lifestyle.Singleton);
 
       // Register all game states

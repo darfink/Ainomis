@@ -4,7 +4,6 @@ namespace Ainomis.Shared.Camera {
   using Microsoft.Xna.Framework;
 
   public class Camera2D : ICamera2D, Common.IUpdateable {
-    // Private members
     private Vector2 _position;
 
     public Camera2D(Vector2 relativeScale) {
@@ -14,14 +13,11 @@ namespace Ainomis.Shared.Camera {
       this.Scale = 1f;
     }
 
-    public Vector2 Position {
-      get { return _position; }
-      set { _position = value; }
-    }
+    public ref Vector2 Position => ref _position;
 
     public Vector2 RelativeScale { get; set; }
 
-    public Vector2 Origin { get; set; }
+    public Vector2 Origin { get; private set; }
 
     public Vector2 ScreenCenter { get; set; }
 
@@ -61,6 +57,7 @@ namespace Ainomis.Shared.Camera {
     /// </summary>
     /// <param name="gameTime">Game time.</param>
     public virtual void Update(GameTime gameTime) {
+      this.Origin = this.ScreenCenter / this.Scale;
       this.Transform =
         Matrix.Identity *
         Matrix.CreateTranslation(-this.Position.X, -this.Position.Y, 0) *
@@ -71,14 +68,12 @@ namespace Ainomis.Shared.Camera {
           this.Scale * this.RelativeScale.Y,
           1));
 
-      this.Origin = this.ScreenCenter / this.Scale;
-
       if(this.Focus != null) {
         // Move the camera using fluid animations
         float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        _position.X += (this.Focus.Position.X - this.Position.X) * this.MoveSpeed * delta;
-        _position.Y += (this.Focus.Position.Y - this.Position.Y) * this.MoveSpeed * delta;
+        Position.X += (this.Focus.Position.X - this.Position.X) * this.MoveSpeed * delta;
+        Position.Y += (this.Focus.Position.Y - this.Position.Y) * this.MoveSpeed * delta;
       }
     }
 

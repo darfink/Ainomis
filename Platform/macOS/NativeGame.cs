@@ -1,6 +1,7 @@
 namespace Ainomis.Platform.MacOS {
   using System;
 
+  using Ainomis.Shared.Command;
   using Ainomis.Shared.Input;
   using Ainomis.Shared.Input.GamePad;
   using Ainomis.Shared.Input.Keyboard;
@@ -8,8 +9,6 @@ namespace Ainomis.Platform.MacOS {
 
   using Microsoft.Xna.Framework;
   using Microsoft.Xna.Framework.Input;
-
-  using GameAction = Game.Action;
 
   public class NativeGame : Game {
     // Private members
@@ -23,7 +22,12 @@ namespace Ainomis.Platform.MacOS {
         PreferMultiSampling = true,
       };
 
-      var iab = new InputActionBinder<GameAction>();
+#if FNA
+      // The FNA framework does not use the platform-specific folder by default
+      Settings.PlatformResourcePrefix = "../Resources";
+#endif
+
+      var iab = new InputActionBinder();
 
       // Always configure keyboard input on desktop
       iab.AddInputDriver(new KeyboardDriver());
@@ -57,20 +61,24 @@ namespace Ainomis.Platform.MacOS {
       base.Draw(gameTime);
     }
 
-    private void ConfigureKeyboardInput(InputActionBinder<GameAction> iab) {
-      iab.AddInputBinding(GameAction.Exit, new KeyboardBinding(Keys.Escape, TimeSpan.FromMilliseconds(100)));
-      iab.AddInputBinding(GameAction.MoveUp, new KeyboardBinding(Keys.W, TimeSpan.FromMilliseconds(100)));
-      iab.AddInputBinding(GameAction.MoveDown, new KeyboardBinding(Keys.S, TimeSpan.FromMilliseconds(100)));
-      iab.AddInputBinding(GameAction.MoveLeft, new KeyboardBinding(Keys.A, TimeSpan.FromMilliseconds(100)));
-      iab.AddInputBinding(GameAction.MoveRight, new KeyboardBinding(Keys.D, TimeSpan.FromMilliseconds(100)));
-      iab.AddInputBinding(GameAction.TapUp, new KeyboardBinding(Keys.W, timeout: TimeSpan.FromMilliseconds(80)));
-      iab.AddInputBinding(GameAction.TapDown, new KeyboardBinding(Keys.S, timeout: TimeSpan.FromMilliseconds(80)));
-      iab.AddInputBinding(GameAction.TapLeft, new KeyboardBinding(Keys.A, timeout: TimeSpan.FromMilliseconds(80)));
-      iab.AddInputBinding(GameAction.TapRight, new KeyboardBinding(Keys.D, timeout: TimeSpan.FromMilliseconds(80)));
+    private void ConfigureKeyboardInput(InputActionBinder iab) {
+      iab.AddInputBinding(Command.Exit, new KeyboardBinding(Keys.Escape, TimeSpan.FromMilliseconds(100)));
+      iab.AddInputBinding(Command.RunUp, new KeyboardBinding(Keys.W, TimeSpan.FromMilliseconds(100), modifiers: Keys.LeftShift));
+      iab.AddInputBinding(Command.RunDown, new KeyboardBinding(Keys.S, TimeSpan.FromMilliseconds(100), modifiers: Keys.LeftShift));
+      iab.AddInputBinding(Command.RunLeft, new KeyboardBinding(Keys.A, TimeSpan.FromMilliseconds(100), modifiers: Keys.LeftShift));
+      iab.AddInputBinding(Command.RunRight, new KeyboardBinding(Keys.D, TimeSpan.FromMilliseconds(100), modifiers: Keys.LeftShift));
+      iab.AddInputBinding(Command.MoveUp, new KeyboardBinding(Keys.W, TimeSpan.FromMilliseconds(100)));
+      iab.AddInputBinding(Command.MoveDown, new KeyboardBinding(Keys.S, TimeSpan.FromMilliseconds(100)));
+      iab.AddInputBinding(Command.MoveLeft, new KeyboardBinding(Keys.A, TimeSpan.FromMilliseconds(100)));
+      iab.AddInputBinding(Command.MoveRight, new KeyboardBinding(Keys.D, TimeSpan.FromMilliseconds(100)));
+      iab.AddInputBinding(Command.TapUp, new KeyboardBinding(Keys.W, timeout: TimeSpan.FromMilliseconds(80)));
+      iab.AddInputBinding(Command.TapDown, new KeyboardBinding(Keys.S, timeout: TimeSpan.FromMilliseconds(80)));
+      iab.AddInputBinding(Command.TapLeft, new KeyboardBinding(Keys.A, timeout: TimeSpan.FromMilliseconds(80)));
+      iab.AddInputBinding(Command.TapRight, new KeyboardBinding(Keys.D, timeout: TimeSpan.FromMilliseconds(80)));
     }
 
-    private void ConfigureGamePadInput(InputActionBinder<GameAction> iab) {
-      iab.AddInputBinding(GameAction.Start, new GamePadBinding(Buttons.Start));
+    private void ConfigureGamePadInput(InputActionBinder iab) {
+      iab.AddInputBinding(Command.Start, new GamePadBinding(Buttons.Start));
     }
   }
 }

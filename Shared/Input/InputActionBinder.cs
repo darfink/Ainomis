@@ -2,18 +2,20 @@ namespace Ainomis.Shared.Input {
   using System;
   using System.Collections.Generic;
   using System.Linq;
-  using System.Reflection;
+
+  using Ainomis.Shared.Command;
+  using Ainomis.Shared.Common;
 
   using Microsoft.Xna.Framework;
 
   // TODO: Implement multi-player support
-  public class InputActionBinder<T> : IActionSystem<T>, Common.IUpdateable {
+  public class InputActionBinder : ICommandSystem, Common.IUpdateable {
     // Private fields
     private readonly Dictionary<Type, IInputDriver> _inputDrivers;
-    private Dictionary<T, List<IInputBinding>> _actionBindings;
+    private Dictionary<Command, List<IInputBinding>> _commandBindings;
 
     public InputActionBinder() {
-      _actionBindings = new Dictionary<T, List<IInputBinding>>();
+      _commandBindings = new Dictionary<Command, List<IInputBinding>>();
       _inputDrivers = new Dictionary<Type, IInputDriver>();
     }
 
@@ -38,30 +40,28 @@ namespace Ainomis.Shared.Input {
       _inputDrivers[bindingType] = system;
     }
 
-    /// <summary>
-    /// Adds an action binding.
-    /// </summary>
-    /// <param name="action">Action.</param>
+    /// <summary>Adds an input binding.</summary>
+    /// <param name="command">Command.</param>
     /// <param name="binding">Binding.</param>
-    public void AddInputBinding(T action, IInputBinding binding) {
+    public void AddInputBinding(Command command, IInputBinding binding) {
       Type derivedType = binding.GetType();
 
       if (!_inputDrivers.ContainsKey(derivedType)) {
         throw new NotSupportedException("No system is registered for this binding type");
       }
 
-      if (!_actionBindings.ContainsKey(action)) {
+      if (!_commandBindings.ContainsKey(command)) {
         // Create the binding list if not already created
-        _actionBindings[action] = new List<IInputBinding>();
+        _commandBindings[command] = new List<IInputBinding>();
       }
 
-      _actionBindings[action].Add(binding);
+      _commandBindings[command].Add(binding);
     }
 
     /// <inheritdoc />
-    public bool IsActionActivated(T action) {
+    public bool IsCommandActivated(Command command) {
       List<IInputBinding> bindings;
-      if (_actionBindings.TryGetValue(action, out bindings)) {
+      if (_commandBindings.TryGetValue(command, out bindings)) {
         return bindings.Any((binding) => _inputDrivers[binding.GetType()].IsInputActive(binding));
       }
 

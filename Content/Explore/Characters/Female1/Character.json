@@ -1,0 +1,104 @@
+{
+  "offsetY": 3,
+  "tileset": {
+    "columns": 7,
+    "firstgid": 1,
+    "image": "Tileset.png",
+    "imageheight": "19",
+    "imagewidth": "112",
+    "margin": 0,
+    "name": "Female1",
+    "spacing": 0,
+    "tilecount": 7,
+    "tileheight": "19",
+    "tilewidth": "16"
+  },
+  "animations": [
+    {
+      "name": "IdleUp",
+      "frames": [{
+        "tileid": 2,
+        "duration": "00:00:01"
+      }]
+    },
+    {
+      "name": "IdleDown",
+      "frames": [{
+        "tileid": 1,
+        "duration": "00:00:01"
+      }]
+    },
+    {
+      "name": "IdleLeft",
+      "frames": [{
+        "tileid": 3,
+        "duration": "00:00:01"
+      }]
+    },
+    {
+      "name": "IdleRight",
+      "frames": [{
+        "tileid": 3,
+        "duration": "00:00:01",
+        "effects": "fliphorizontally"
+      }]
+    },
+    {
+      "name": "MoveUp",
+      "frames": [{
+        "tileid": 5,
+        "duration": "00:00:00.2"
+      }, {
+        "tileid": 2,
+        "duration": "00:00:00.2"
+      }, {
+        "tileid": 5,
+        "duration": "00:00:00.2",
+        "effects": "fliphorizontally"
+      }]
+    },
+    {
+      "name": "MoveDown",
+      "frames": [{
+        "tileid": 4,
+        "duration": "00:00:00.2"
+      }, {
+        "tileid": 1,
+        "duration": "00:00:00.2"
+      }, {
+        "tileid": 4,
+        "duration": "00:00:00.2",
+        "effects": "fliphorizontally"
+      }]
+    },
+    {
+      "name": "MoveLeft",
+      "frames": [{
+        "tileid": 6,
+        "duration": "00:00:00.2"
+      }, {
+        "tileid": 3,
+        "duration": "00:00:00.2"
+      }, {
+        "tileid": 7,
+        "duration": "00:00:00.2"
+      }]
+    },
+    {
+      "name": "MoveRight",
+      "frames": [{
+        "tileid": 6,
+        "duration": "00:00:00.2",
+        "effects": "fliphorizontally"
+      }, {
+        "tileid": 3,
+        "duration": "00:00:00.2",
+        "effects": "fliphorizontally"
+      }, {
+        "tileid": 7,
+        "duration": "00:00:00.2",
+        "effects": "fliphorizontally"
+      }]
+    }
+  ]
+}

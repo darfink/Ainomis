@@ -18,7 +18,7 @@ namespace Ainomis.Game.Components {
     /// Gets or sets the mirroring.
     /// </summary>
     /// <value>The mirroring.</value>
-    public SpriteEffects Mirroring { get; set; }
+    public SpriteEffects Effects { get; set; }
 
     /// <summary>
     /// Gets or sets the origin.
