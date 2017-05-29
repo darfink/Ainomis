@@ -7,7 +7,6 @@ namespace Ainomis.Shared.Input.Keyboard {
   using Microsoft.Xna.Framework.Input;
 
   public class KeyboardDriver : IInputDriver {
-    // Private fields
     private readonly Dictionary<Keys, TimeSpan> _keyHeldTimes;
     private KeyboardState _currentState;
 

@@ -1,5 +1,5 @@
 namespace Ainomis.Shared.Command {
-  internal interface ICommandSystem {
+  internal interface ICommandSource {
     /// <summary>
     /// Determines whether an action is currently active or not.
     /// </summary>

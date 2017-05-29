@@ -1,6 +1,8 @@
 namespace Ainomis.Extensions {
   using System;
+  using System.Collections.Generic;
   using System.Reflection;
+  using System.Linq;
 
   internal static class GenericExtensions {
     /// <summary>
@@ -12,6 +14,13 @@ namespace Ainomis.Extensions {
       }
 
       return o;
+    }
+
+    /// <summary>
+    /// Returns the individual flags of a bit flag collection.
+    /// </summary>
+    public static IEnumerable<Enum> GetFlags(this Enum e) {
+          return Enum.GetValues(e.GetType()).Cast<Enum>().Where(e.HasFlag);
     }
 
     /// <summary>

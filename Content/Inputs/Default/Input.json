@@ -1,0 +1,70 @@
+{
+  "image": "Overlay.png",
+  "imageheight": 640,
+  "imagewidth": 960,
+  "inputs": [{
+    "button": "Back",
+    "area": {
+      "x": 340,
+      "y": 555,
+      "width": 120,
+      "height": 65
+    }
+  }, {
+    "button": "Start",
+    "area": {
+      "x": 495,
+      "y": 555,
+      "width": 120,
+      "height": 65
+    }
+  }, {
+    "button": "A",
+    "area": {
+      "x": 803,
+      "y": 339,
+      "width": 135,
+      "height": 135
+    }
+  }, {
+    "button": "B",
+    "area": {
+      "x": 659,
+      "y": 483,
+      "width": 135,
+      "height": 135
+    }
+  }, {
+    "button": "DPadUp",
+    "area": {
+      "x": 107,
+      "y": 339,
+      "width": 107,
+      "height": 90
+    }
+  }, {
+    "button": "DPadDown",
+    "area": {
+      "x": 107,
+      "y": 533,
+      "width": 107,
+      "height": 90
+    }
+  }, {
+    "button": "DPadLeft",
+    "area": {
+      "x": 20,
+      "y": 426,
+      "width": 90,
+      "height": 107
+    }
+  }, {
+    "button": "DPadRight",
+    "area": {
+      "x": 214,
+      "y": 426,
+      "width": 90,
+      "height": 107
+    }
+  }]
+}

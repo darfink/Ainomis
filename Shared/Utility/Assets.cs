@@ -1,10 +1,12 @@
 namespace Ainomis.Shared.Utility {
+  using System;
   using System.IO;
 
   using Microsoft.Xna.Framework;
   using Microsoft.Xna.Framework.Graphics;
 
   using Newtonsoft.Json;
+  using Newtonsoft.Json.Serialization;
 
   /// <summary>
   /// System agnostic (PCL compliant) file data retriever
@@ -48,8 +50,24 @@ namespace Ainomis.Shared.Utility {
     /// </summary>
     /// <returns>An object representing the JSON.</returns>
     /// <param name="path">Path.</param>
-    public static T LoadJson<T>(string path) => JsonConvert.DeserializeObject<T>(LoadString(path));
+    public static T LoadJson<T>(string path) {
+      var settings = new JsonSerializerSettings() {
+        ContractResolver = new XnaFriendlyResolver(),
+      };
+
+      return JsonConvert.DeserializeObject<T>(LoadString(path), settings);
+    }
 
     private static string GetResourcePath(string path) => Path.Combine(Settings.ResourcePrefix, path);
+
+    private class XnaFriendlyResolver : DefaultContractResolver {
+      protected override JsonContract CreateContract(Type objectType) {
+        if (objectType == typeof(Rectangle)) {
+          return CreateObjectContract(objectType);
+        }
+
+        return base.CreateContract(objectType);
+      }
+    }
   }
 }

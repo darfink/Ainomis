@@ -6,52 +6,17 @@ namespace Ainomis.Shared.Input.GamePad {
   using Microsoft.Xna.Framework;
   using Microsoft.Xna.Framework.Input;
 
-  public class GamePadDriver : IInputDriver {
-    private readonly Dictionary<Buttons, TimeSpan> _buttonHeldTimes;
-    private readonly Func<GamePadState> _getCurrentState;
-    private GamePadState _currentState;
+  /// <summary>Game pad driver for controllers.</summary>
+  public class GamePadDriver : GamePadDriverBase {
+    private PlayerIndex _playerIndex;
 
-    public GamePadDriver(PlayerIndex player) : this(() => GamePad.GetState(player)) {
-    }
+    /// <summary>Constructs a new game pad driver for a specific player.</summary>
+    public GamePadDriver(PlayerIndex player) : base() => _playerIndex = player;
 
-    public GamePadDriver(Func<GamePadState> getCurrentState) {
-      _buttonHeldTimes = new Dictionary<Buttons, TimeSpan>();
-      _getCurrentState = getCurrentState;
-      _currentState = getCurrentState();
-
-      foreach(var button in Enum.GetValues(typeof(Buttons))) {
-        // Initially all keys have been held for zero seconds
-        _buttonHeldTimes.Add((Buttons)button, TimeSpan.Zero);
-      }
-    }
-
+    /// <summary>Returns whether a player's game pad is connected or not.</summary>
     public static bool IsConnected(PlayerIndex player) => GamePad.GetState(player).IsConnected;
 
-    public void Update(GameTime gameTime) {
-      _currentState = _getCurrentState();
-
-      foreach(Buttons button in Enum.GetValues(typeof(Buttons))) {
-        // Update the current hold time for each key
-        if(_currentState.IsButtonDown(button)) {
-          _buttonHeldTimes[button] += gameTime.ElapsedGameTime;
-        } else {
-          _buttonHeldTimes[button] = TimeSpan.Zero;
-        }
-      }
-    }
-
-    public bool IsInputActive(IInputBinding binding) {
-      var joystickBinding = (GamePadBinding)binding;
-
-      if(_currentState.IsButtonDown(joystickBinding.Button)) {
-        if(_buttonHeldTimes[joystickBinding.Button] >= joystickBinding.Duration) {
-          return !joystickBinding.Timeout.HasValue || (_buttonHeldTimes[joystickBinding.Button] < joystickBinding.Timeout.Value);
-        }
-      }
-
-      return false;
-    }
-
-    public Type GetBindingType() => typeof(GamePadBinding);
+    /// <inheritdoc />
+    protected override GamePadState GetCurrentState() => GamePad.GetState(_playerIndex);
   }
 }

@@ -18,7 +18,7 @@ namespace Ainomis.Shared.Utility {
     private static readonly KeyValuePair<string, int> VirtualResolutionHeightKV = new KeyValuePair<string, int>("VirtualResolutionHeight",  750);
 
     private static readonly KeyValuePair<string, float> MusicVolumeKV =
-      new KeyValuePair<string, float>("MusicVolume", 0f);
+      new KeyValuePair<string, float>("MusicVolume", 1f);
 
     private static readonly KeyValuePair<string, bool> FullscreenKV =
       new KeyValuePair<string, bool>("Fullscreen",  false);

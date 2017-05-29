@@ -33,13 +33,14 @@ namespace Ainomis.Game.States.Explore.Systems {
       Command.TapRight,
     };
 
-    /// <summary>Processes a movable entity on the tile map.</summary>
+    /// <summary>Processes a movable entity.</summary>
     public override void Process(Entity entity, ControlComponent control, TileComponent tile) {
       Action alignPosition = null;
       bool hasReachedDestination = false;
 
       // If the entity is moving, determine whether it has reached its destination or not
       if (tile.State == TileState.Moving || tile.State == TileState.Running) {
+        // TODO: The destination does not take the area's coordinates into account
         var transform = entity.GetComponent<TransformComponent>();
         var destination = tile.Area.GetOffsetForTile(tile.Index);
 
@@ -79,7 +80,7 @@ namespace Ainomis.Game.States.Explore.Systems {
               alignPosition();
             }
 
-            // Prevent the velocity component from being removed
+            // The entity has a no longer reached its destination
             hasReachedDestination = false;
           }
         }

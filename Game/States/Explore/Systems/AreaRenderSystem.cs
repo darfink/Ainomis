@@ -40,7 +40,7 @@ namespace Ainomis.Game.States.Explore.Systems {
         return;
       }
 
-      // Convert the units from screen pixels to area tiles
+      // Convert the units from visible pixels to area tiles
       visibleTiles.X = RoundDown((int)Math.Abs(visibleTiles.X - transform.Position.X), (int)area.TileWidth);
       visibleTiles.Y = RoundDown((int)Math.Abs(visibleTiles.Y - transform.Position.Y), (int)area.TileHeight);
       visibleTiles.Width = Math.Min(RoundUp(visibleTiles.Width, (int)area.TileWidth) + visibleTiles.X + 1, (int)area.Width);

@@ -5,11 +5,11 @@ namespace Ainomis.Game.Components {
   using Artemis.Interface;
 
   /// <summary>Control component.</summary>
-  internal class ControlComponent : ICommandSystem, IComponent {
-    private ICommandSystem _commandSystem;
+  internal class ControlComponent : ICommandSource, IComponent {
+    private ICommandSource _commandSystem;
 
     /// <summary>Constructs a new control component.</summary>
-    public ControlComponent(ICommandSystem system) =>
+    public ControlComponent(ICommandSource system) =>
       _commandSystem = system.ThrowIfNull(nameof(system));
 
     /// <inheritdoc />

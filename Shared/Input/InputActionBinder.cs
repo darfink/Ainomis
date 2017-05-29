@@ -9,7 +9,7 @@ namespace Ainomis.Shared.Input {
   using Microsoft.Xna.Framework;
 
   // TODO: Implement multi-player support
-  public class InputActionBinder : ICommandSystem, Common.IUpdateable {
+  public class InputActionBinder : ICommandSource, Common.IUpdateable {
     // Private fields
     private readonly Dictionary<Type, IInputDriver> _inputDrivers;
     private Dictionary<Command, List<IInputBinding>> _commandBindings;

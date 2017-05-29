@@ -31,7 +31,7 @@ namespace Ainomis.Game.States.Explore {
       ContentManager content,
       GameStateManager gameStateManager,
       SpriteBatch spriteBatch,
-      ICommandSystem commandSystem,
+      ICommandSource commandSystem,
       IDisplayInfo displayInfo) :
       base(content, gameStateManager, spriteBatch, commandSystem, displayInfo) {
     }

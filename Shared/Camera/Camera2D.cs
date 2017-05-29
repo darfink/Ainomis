@@ -7,10 +7,10 @@ namespace Ainomis.Shared.Camera {
     private Vector2 _position;
 
     public Camera2D(Vector2 relativeScale) {
-      this.RelativeScale = relativeScale;
-      this.ScreenCenter = Vector2.Zero;
-      this.MoveSpeed = 1.25f;
-      this.Scale = 1f;
+      RelativeScale = relativeScale;
+      ScreenCenter = Vector2.Zero;
+      MoveSpeed = 1.25f;
+      Scale = 1f;
     }
 
     public ref Vector2 Position => ref _position;

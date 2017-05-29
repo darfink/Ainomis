@@ -38,13 +38,16 @@
     <ExternalCompile Include="Shared\Camera\ICamera2D.cs" />
     <ExternalCompile Include="Shared\Camera\IFocusable.cs" />
     <ExternalCompile Include="Shared\Command\Command.cs" />
-    <ExternalCompile Include="Shared\Command\ICommandSystem.cs" />
+    <ExternalCompile Include="Shared\Command\ICommandSource.cs" />
     <ExternalCompile Include="Shared\Common\IDrawable.cs" />
     <ExternalCompile Include="Shared\Common\IUpdateable.cs" />
     <ExternalCompile Include="Shared\Display\DisplayInfo.cs" />
     <ExternalCompile Include="Shared\Display\IDisplayInfo.cs" />
     <ExternalCompile Include="Shared\Input\GamePad\GamePadBinding.cs" />
     <ExternalCompile Include="Shared\Input\GamePad\GamePadDriver.cs" />
+    <ExternalCompile Include="Shared\Input\GamePad\GamePadDriverBase.cs" />
+    <ExternalCompile Include="Shared\Input\GamePad\VirtualGamePad.cs" />
+    <ExternalCompile Include="Shared\Input\GamePad\VirtualOverlay.cs" />
     <ExternalCompile Include="Shared\Input\IInputBinding.cs" />
     <ExternalCompile Include="Shared\Input\IInputDriver.cs" />
     <ExternalCompile Include="Shared\Input\InputActionBinder.cs" />

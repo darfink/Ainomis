@@ -4,13 +4,7 @@ namespace Ainomis.Shared.Input.Keyboard {
   using Microsoft.Xna.Framework.Input;
 
   public class KeyboardBinding : IInputBinding {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="Ainomis.Input.Keyboard.KeyboardBinding"/> class.
-    /// </summary>
-    /// <param name="key">Key.</param>
-    /// <param name="duration">Duration.</param>
-    /// <param name="timeout">Timeout.</param>
-    /// <param name="modifiers">Modifiers.</param>
+    /// <summary>Constructs a new keyboard binding.</summary>
     public KeyboardBinding(Keys key, TimeSpan duration = new TimeSpan(), TimeSpan? timeout = null, params Keys[] modifiers) {
       this.Modifiers = modifiers;
       this.Duration = duration;
@@ -25,28 +19,16 @@ namespace Ainomis.Shared.Input.Keyboard {
       }
     }
 
-    /// <summary>
-    /// Gets the key.
-    /// </summary>
-    /// <value>The key.</value>
+    /// <summary>Gets the key.</summary>
     public Keys Key { get; private set; }
 
-    /// <summary>
-    /// Gets the modifiers.
-    /// </summary>
-    /// <value>The modifiers.</value>
+    /// <summary>Gets the modifiers.</summary>
     public Keys[] Modifiers { get; private set; }
 
-    /// <summary>
-    /// Gets the duration.
-    /// </summary>
-    /// <value>The duration.</value>
+    /// <summary>Gets the duration.</summary>
     public TimeSpan Duration { get; private set; }
 
-    /// <summary>
-    /// Gets the timeout.
-    /// </summary>
-    /// <value>The timeout.</value>
+    /// <summary>Gets the timeout.</summary>
     public TimeSpan? Timeout { get; private set; }
   }
 }

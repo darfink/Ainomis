@@ -26,7 +26,7 @@ namespace Ainomis.Game.States.Menu {
       ContentManager content,
       GameStateManager gameStateManager,
       SpriteBatch spriteBatch,
-      ICommandSystem commandSystem,
+      ICommandSource commandSystem,
       IDisplayInfo displayInfo) :
       base(content, gameStateManager, spriteBatch, commandSystem, displayInfo) {
     }
@@ -39,14 +39,6 @@ namespace Ainomis.Game.States.Menu {
       MediaPlayer.Play(_backgroundMusic);
 
       this.LoadBackground(EntityWorld.CreateEntity()).Refresh();
-    }
-
-    public override void Exit() {
-      MediaPlayer.IsRepeating = false;
-      MediaPlayer.Stop();
-
-      // Free our resources
-      base.Exit();
     }
 
     public void Update(GameTime gameTime) {

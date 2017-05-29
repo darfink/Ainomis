@@ -7,6 +7,7 @@ namespace Ainomis.Game.Manager {
   using Artemis;
   using Artemis.Manager;
 
+  using Microsoft.Xna.Framework.Media;
   using Microsoft.Xna.Framework.Content;
   using Microsoft.Xna.Framework.Graphics;
 
@@ -35,7 +36,7 @@ namespace Ainomis.Game.Manager {
         ContentManager content,
         GameStateManager gameStateManager,
         SpriteBatch spriteBatch,
-        ICommandSystem commandSystem,
+        ICommandSource commandSystem,
         IDisplayInfo displayInfo) {
       this.Content = content.ThrowIfNull(nameof(content));
       this.GameStateManager = gameStateManager.ThrowIfNull(nameof(gameStateManager));
@@ -54,7 +55,7 @@ namespace Ainomis.Game.Manager {
 
     protected SpriteBatch SpriteBatch { get; set; }
 
-    protected ICommandSystem CommandSystem { get; set; }
+    protected ICommandSource CommandSystem { get; set; }
 
     protected IDisplayInfo DisplayInfo { get; set; }
 
@@ -78,6 +79,10 @@ namespace Ainomis.Game.Manager {
     ///   </para>
     /// </remarks>
     public virtual void Exit() {
+      // Disable background music
+      MediaPlayer.IsRepeating = false;
+      MediaPlayer.Stop();
+
       // Free entity memory
       EntityWorld.Clear();
 

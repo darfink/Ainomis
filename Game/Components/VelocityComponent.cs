@@ -3,10 +3,9 @@ namespace Ainomis.Game.Components {
 
   using Artemis.Interface;
 
-  internal class VelocityComponent : IComponent {
-    /// <summary>To radians.</summary>
-    private const float ToRadians = (float)(Math.PI / 180.0);
+  using Microsoft.Xna.Framework;
 
+  internal class VelocityComponent : IComponent {
     /// <summary>Initializes a new velocity component.</summary>
     /// <param name="speed">Speed.</param>
     /// <param name="angle">Angle.</param>
@@ -25,6 +24,6 @@ namespace Ainomis.Game.Components {
     public float Angle { get; set; }
 
     /// <summary>Gets the angle as radians.</summary>
-    public float AngleAsRadians => ToRadians * this.Angle;
+    public float AngleAsRadians => MathHelper.ToRadians(this.Angle);
   }
 }

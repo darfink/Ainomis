@@ -113,6 +113,7 @@
     <MonoGameContentReference Include="Content\Content.iOS.mgcb" />
     <Content Include="Content\Explore\Areas\FalletTown\Area.json" />
     <Content Include="Content\Explore\Characters\Female1\Character.json" />
+    <Content Include="Content\Inputs\Default\Input.json" />
     <None Include="Content\Menu\Background.jpg" />
     <None Include="Content\Menu\Calibri.ttf" />
     <None Include="Content\Menu\Label.spritefont" />

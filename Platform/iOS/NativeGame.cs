@@ -1,5 +1,4 @@
 namespace Ainomis.Platform.Ios {
-  using Ainomis.Shared.Input;
   using Ainomis.Shared.Utility;
 
   using Microsoft.Xna.Framework;
@@ -17,10 +16,8 @@ namespace Ainomis.Platform.Ios {
         SynchronizeWithVerticalRetrace = true,
       };
 
-      var kab = new InputActionBinder();
-
       // Return control to the platform-agnostic game object
-      _ainomisGame = new MainGame(this, kab);
+      _ainomisGame = new MainGame(this, touchEnabled: true);
     }
 
     // Class fields
