@@ -88,7 +88,7 @@ namespace Ainomis.Game.States.Explore.Systems {
       switch (tile.State) {
         case TileState.Moving:
         case TileState.Running:
-          var speed = MovementSpeed * (tile.State == TileState.Running ? 1.5f : 1f);
+          var speed = MovementSpeed * (tile.State == TileState.Running ? 1.8f : 1f);
           entity.AddComponent(new VelocityComponent(speed, tile.Direction.ToAngle()));
           break;
         case TileState.Idling:

@@ -1,0 +1,221 @@
+{
+  "origin": {
+    "x": 0,
+    "y": 5
+  },
+  "tileset": {
+    "columns": 9,
+    "firstgid": 1,
+    "image": "Tileset.png",
+    "imageheight": "42",
+    "imagewidth": "144",
+    "margin": 0,
+    "name": "MaleProtagonist",
+    "spacing": 0,
+    "tilecount": 18,
+    "tileheight": "21",
+    "tilewidth": "16"
+  },
+  "animations": [
+    {
+      "name": "IdleUp",
+      "frames": [
+        {
+          "tileid": 4,
+          "duration": "00:00:01"
+        }
+      ]
+    },
+    {
+      "name": "IdleDown",
+      "frames": [
+        {
+          "tileid": 1,
+          "duration": "00:00:01"
+        }
+      ]
+    },
+    {
+      "name": "IdleLeft",
+      "frames": [
+        {
+          "tileid": 7,
+          "duration": "00:00:01",
+          "effects": "fliphorizontally"
+        }
+      ]
+    },
+    {
+      "name": "IdleRight",
+      "frames": [
+        {
+          "tileid": 7,
+          "duration": "00:00:01"
+        }
+      ]
+    },
+    {
+      "name": "MoveUp",
+      "frames": [
+        {
+          "tileid": 6,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 4,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 5,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 4,
+          "duration": "00:00:00.1"
+        }
+      ]
+    },
+    {
+      "name": "MoveDown",
+      "frames": [
+        {
+          "tileid": 3,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 1,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 2,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 1,
+          "duration": "00:00:00.1"
+        }
+      ]
+    },
+    {
+      "name": "MoveLeft",
+      "frames": [
+        {
+          "tileid": 8,
+          "duration": "00:00:00.2",
+          "effects": "fliphorizontally"
+        },
+        {
+          "tileid": 7,
+          "duration": "00:00:00.2",
+          "effects": "fliphorizontally"
+        },
+        {
+          "tileid": 9,
+          "duration": "00:00:00.2",
+          "effects": "fliphorizontally"
+        },
+        {
+          "tileid": 7,
+          "duration": "00:00:00.1",
+          "effects": "fliphorizontally"
+        }
+      ]
+    },
+    {
+      "name": "MoveRight",
+      "frames": [
+        {
+          "tileid": 9,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 7,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 8,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 7,
+          "duration": "00:00:00.1"
+        }
+      ]
+    },
+    {
+      "name": "RunUp",
+      "frames": [
+        {
+          "tileid": 14,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 13,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 15,
+          "duration": "00:00:00.2"
+        }
+      ]
+    },
+    {
+      "name": "RunDown",
+      "frames": [
+        {
+          "tileid": 11,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 12,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 10,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 12,
+          "duration": "00:00:00.1"
+        }
+      ]
+    },
+    {
+      "name": "RunLeft",
+      "frames": [
+        {
+          "tileid": 17,
+          "duration": "00:00:00.2",
+          "effects": "fliphorizontally"
+        },
+        {
+          "tileid": 16,
+          "duration": "00:00:00.2",
+          "effects": "fliphorizontally"
+        },
+        {
+          "tileid": 18,
+          "duration": "00:00:00.2",
+          "effects": "fliphorizontally"
+        }
+      ]
+    },
+    {
+      "name": "RunRight",
+      "frames": [
+        {
+          "tileid": 17,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 16,
+          "duration": "00:00:00.2"
+        },
+        {
+          "tileid": 18,
+          "duration": "00:00:00.2"
+        }
+      ]
+    }
+  ]
+}

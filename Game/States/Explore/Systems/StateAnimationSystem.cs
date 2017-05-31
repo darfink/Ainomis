@@ -16,7 +16,7 @@ namespace Ainomis.Game.States.Explore.Systems {
 
     private string GetStateAnimation(TileState state, Direction direction) {
       switch (state) {
-        case TileState.Running:
+        case TileState.Running: return $"Run{direction}";
         case TileState.Moving: return $"Move{direction}";
         case TileState.Idling: return $"Idle{direction}";
         default: throw new InvalidOperationException();

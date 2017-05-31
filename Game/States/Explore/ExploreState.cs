@@ -42,7 +42,7 @@ namespace Ainomis.Game.States.Explore {
       var area = falletTown.GetComponent<AreaComponent>();
       falletTown.Refresh();
 
-      _playerEntity = LoadCharacter(EntityWorld.CreateEntity(), "Female1");
+      _playerEntity = LoadCharacter(EntityWorld.CreateEntity(), "MaleProtagonist");
       _playerEntity.AddComponent(new ControlComponent(CommandSystem));
       _playerEntity.AddComponent(new TileComponent(area, 0));
       _playerEntity.Refresh();
