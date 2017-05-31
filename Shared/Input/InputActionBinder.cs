@@ -19,9 +19,7 @@ namespace Ainomis.Shared.Input {
       _inputDrivers = new Dictionary<Type, IInputDriver>();
     }
 
-    /// <summary>
-    /// Adds a binding system.
-    /// </summary>
+    /// <summary>Adds a binding system.</summary>
     /// <param name="system">System.</param>
     public void AddInputDriver(IInputDriver system) {
       Type bindingType = system.GetBindingType();

@@ -6,9 +6,7 @@ namespace Ainomis.Game.Resources {
   using Microsoft.Xna.Framework.Graphics;
 
   internal class Character {
-    public int OffsetX { get; set; }
-
-    public int OffsetY { get; set; }
+    public Vector2 Origin { get; set; }
 
     public Tileset Tileset { get; set; }
 

@@ -42,9 +42,7 @@ namespace Ainomis.Platform.Ios {
       _game.Dispose();
     }
 
-    /// <summary>
-    /// The main entry point for the application.
-    /// </summary>
+    /// <summary>The main entry point for the application.</summary>
     internal static void Main(string[] args) {
       UIApplication.Main(args, null, "AppDelegate");
     }

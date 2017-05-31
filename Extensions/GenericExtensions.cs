@@ -1,8 +1,8 @@
 namespace Ainomis.Extensions {
   using System;
   using System.Collections.Generic;
-  using System.Reflection;
   using System.Linq;
+  using System.Reflection;
 
   internal static class GenericExtensions {
     /// <summary>
@@ -20,7 +20,7 @@ namespace Ainomis.Extensions {
     /// Returns the individual flags of a bit flag collection.
     /// </summary>
     public static IEnumerable<Enum> GetFlags(this Enum e) {
-          return Enum.GetValues(e.GetType()).Cast<Enum>().Where(e.HasFlag);
+      return Enum.GetValues(e.GetType()).Cast<Enum>().Where(e.HasFlag);
     }
 
     /// <summary>
@@ -41,15 +41,11 @@ namespace Ainomis.Extensions {
         }
 
         PropertyInfo targetProperty = typeDest.GetProperty(srcProp.Name);
-        if (targetProperty == null) {
+        if (targetProperty == null || !targetProperty.CanWrite) {
           continue;
         }
 
-        if (!targetProperty.CanWrite) {
-          continue;
-        }
-
-        if (targetProperty.GetSetMethod(true) != null && targetProperty.GetSetMethod(true).IsPrivate) {
+        if (targetProperty.GetSetMethod(true)?.IsPrivate ?? false) {
           continue;
         }
 

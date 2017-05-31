@@ -24,10 +24,10 @@ namespace Ainomis.Game.States.Explore.Systems {
     }
 
     public override void Process(
-      Entity entity,
-      AreaComponent area,
-      TextureComponent image,
-      TransformComponent transform) {
+        Entity entity,
+        AreaComponent area,
+        TextureComponent image,
+        TransformComponent transform) {
       var areaBounds = new Rectangle(
         (int)transform.Position.X,
         (int)transform.Position.Y,

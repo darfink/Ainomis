@@ -3,6 +3,7 @@ namespace Ainomis.Game.States.Explore.Systems {
   using System.Collections.Generic;
   using System.Linq;
 
+  using Ainomis.Extensions;
   using Ainomis.Game.Components;
   using Ainomis.Game.States.Explore.Components;
   using Ainomis.Shared.Command;
@@ -23,10 +24,10 @@ namespace Ainomis.Game.States.Explore.Systems {
       Command.RunDown,
       Command.RunLeft,
       Command.RunRight,
-      Command.MoveUp,
-      Command.MoveDown,
-      Command.MoveLeft,
-      Command.MoveRight,
+      Command.WalkUp,
+      Command.WalkDown,
+      Command.WalkLeft,
+      Command.WalkRight,
       Command.TapUp,
       Command.TapDown,
       Command.TapLeft,
@@ -35,64 +36,76 @@ namespace Ainomis.Game.States.Explore.Systems {
 
     /// <summary>Processes a movable entity.</summary>
     public override void Process(Entity entity, ControlComponent control, TileComponent tile) {
-      Action alignPosition = null;
-      bool hasReachedDestination = false;
+      var initial = (state: tile.State, direction: tile.Direction);
 
-      // If the entity is moving, determine whether it has reached its destination or not
-      if (tile.State == TileState.Moving || tile.State == TileState.Running) {
+      if (tile.State.IsMoving()) {
         // TODO: The destination does not take the area's coordinates into account
-        var transform = entity.GetComponent<TransformComponent>();
-        var destination = tile.Area.GetOffsetForTile(tile.Index);
+        var position = entity.GetComponent<TransformComponent>().Position;
+        var destination = tile.Area.GetTileOffset(tile.Index);
+        var runCommand = Command.Run | tile.Direction.ToCommand();
 
-        if (!HasReachedDestination(transform.Position, destination, tile.Direction)) {
-          return;
+        if (HasReachedDestination(position, destination, tile.Direction)) {
+          tile.State = TileState.Idling;
+        } else if(tile.State == TileState.Moving && control.IsCommandActivated(runCommand)) {
+          tile.State = TileState.Running;
         }
-
-        // Normalizer for the position so it's aligned along tiles
-        alignPosition = () => transform.Position = destination;
-        hasReachedDestination = true;
       }
 
-      // Check for any new inputs from the command source
-      foreach (var command in _movementCommands.Where(control.IsCommandActivated).Take(1)) {
-        var direction = GetCommandDirection(command);
-        var previousDirection = tile.Direction;
-        tile.Direction = direction;
+      if (tile.State == TileState.Idling) {
+        // Check for any new inputs from the command source
+        var command = _movementCommands.Where(control.IsCommandActivated).FirstOrDefault();
+        if (command != Command.None) {
+          bool isRunning = command.HasFlag(Command.Run);
+          var direction = command.ToDirection();
 
-        if (!command.HasFlag(Command.Tap)) {
-          // No tiles are returned in case it is out of bounds
-          var tiles = tile.Area.GetTilesForDirection(tile.Index, direction);
+          if (isRunning || command.HasFlag(Command.Walk)) {
+            // No tiles are returned in case they are out of bounds
+            var tiles = tile.Area.GetTilesInDirection(tile.Index, direction);
+            foreach(var adjacentTile in tiles.Take(1)) {
+              // If the direction has changed the position must be aligned
+              if (tile.Direction != direction) {
+                AlignEntityToTile(entity, tile);
+              }
 
-          foreach(var nextTile in tiles.Take(1)) {
-            bool isRunning = command.HasFlag(Command.Run);
-
-            // Update the entity's current state and tile position
-            tile.State = isRunning ? TileState.Running : TileState.Moving;
-            tile.Index = nextTile;
-
-            // Determine the speed of the entity
-            float speed = MovementSpeed * (isRunning ? 2 : 1);
-            entity.AddComponent(new VelocityComponent(speed, direction.ToAngle()));
-            entity.Refresh();
-
-            // If the direction has changed the position must be aligned
-            if (alignPosition != null && previousDirection != direction) {
-              alignPosition();
+              // Update the entity's current state and tile position
+              tile.State = isRunning ? TileState.Running : TileState.Moving;
+              tile.Index = adjacentTile;
             }
-
-            // The entity has a no longer reached its destination
-            hasReachedDestination = false;
           }
+
+          // Update the entity's current direction
+          tile.Direction = direction;
         }
       }
 
-      if (hasReachedDestination) {
-        tile.State = TileState.Idling;
-        alignPosition();
-
-        entity.RemoveComponent<VelocityComponent>();
-        entity.Refresh();
+      if (initial.state != tile.State || initial.direction != tile.Direction) {
+        UpdateEntityComponents(entity, tile);
       }
+    }
+
+    /// <summary>Updates the entity's components after a state change.</summary>
+    private static void UpdateEntityComponents(Entity entity, TileComponent tile) {
+      switch (tile.State) {
+        case TileState.Moving:
+        case TileState.Running:
+          var speed = MovementSpeed * (tile.State == TileState.Running ? 1.5f : 1f);
+          entity.AddComponent(new VelocityComponent(speed, tile.Direction.ToAngle()));
+          break;
+        case TileState.Idling:
+          entity.RemoveComponent<VelocityComponent>();
+          AlignEntityToTile(entity, tile);
+          break;
+        default: throw new InvalidOperationException();
+      }
+
+      entity.Refresh();
+    }
+
+    /// <summary>Aligns the entity's position to its current tile.</summary>
+    private static void AlignEntityToTile(Entity entity, TileComponent tile) {
+      var transform = entity.GetComponent<TransformComponent>();
+      var position = tile.Area.GetTileOffset(tile.Index);
+      transform.Position = position;
     }
 
     /// <summary>Determines whether the entity has reached the designated destination or not.</summary>
@@ -104,21 +117,6 @@ namespace Ainomis.Game.States.Explore.Systems {
         case Direction.Right: return position.X >= destination.X;
         default: throw new InvalidOperationException();
       }
-    }
-
-    /// <summary>Returns the direction a command is intended for.</summary>
-    private static Direction GetCommandDirection(Command command) {
-      if (command.HasFlag(Command.Up)) {
-        return Direction.Up;
-      } else if (command.HasFlag(Command.Down)) {
-        return Direction.Down;
-      } else if (command.HasFlag(Command.Left)) {
-        return Direction.Left;
-      } else if (command.HasFlag(Command.Right)) {
-        return Direction.Right;
-      }
-
-      throw new ArgumentOutOfRangeException(nameof(command));
     }
   }
 }

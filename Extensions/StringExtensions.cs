@@ -3,6 +3,7 @@ namespace Ainomis.Extensions {
   using System.Xml.Serialization;
 
   internal static class StringExtensions {
+    /// <summary>Returns the string captialized.</summary>
     public static string CapitalizeFirstLetter(this string s) {
       if (string.IsNullOrEmpty(s)) {
         return s;

@@ -1,16 +1,16 @@
 namespace Ainomis.Shared.Input.GamePad {
   using System;
   using System.Collections.Generic;
-  using System.Linq;
   using System.IO;
+  using System.Linq;
 
   using Ainomis.Extensions;
   using Ainomis.Shared.Display;
   using Ainomis.Shared.Utility;
 
   using Microsoft.Xna.Framework;
-  using Microsoft.Xna.Framework.Graphics;
   using Microsoft.Xna.Framework.Content;
+  using Microsoft.Xna.Framework.Graphics;
   using Microsoft.Xna.Framework.Input;
 #if !FNA
   using Microsoft.Xna.Framework.Input.Touch;
@@ -52,13 +52,14 @@ namespace Ainomis.Shared.Input.GamePad {
       _spriteBatch.End();
     }
 
-    /// <summary>Returns the virtual game pads current state.</summary>
-    protected override GamePadState GetCurrentState() => _controller.State;
-
     /// <summary>Activates a specific game pad overlay.</summary>
     public void LoadOverlay(string name) {
       var directory = Path.Combine("Inputs", name);
       var overlay = Assets.LoadJson<VirtualOverlay>(Path.Combine(directory, "Input.json"));
+
+      if (string.IsNullOrWhiteSpace(overlay.Image)) {
+        throw new ArgumentException("Invalid overlay; no associated image", nameof(name));
+      }
 
       var overlaySize = new Vector2(overlay.ImageWidth, overlay.ImageHeight);
       var overlayPath = Path.Combine(directory, Path.ChangeExtension(overlay.Image, null));
@@ -69,6 +70,8 @@ namespace Ainomis.Shared.Input.GamePad {
 
       foreach (var input in overlay.Inputs) {
         var area = input.Area;
+
+        // Calibrate input coordinates with the screen
         input.Area = new Rectangle(
           (int)(area.X * _controller.Scale.X),
           (int)(area.Y * _controller.Scale.Y),
@@ -76,6 +79,9 @@ namespace Ainomis.Shared.Input.GamePad {
           (int)(area.Height * _controller.Scale.Y));
       }
     }
+
+    /// <summary>Returns the virtual game pads current state.</summary>
+    protected override GamePadState GetCurrentState() => _controller.State;
 
     /// <summary>Returns a collection of active spots.</summary>
     private IEnumerable<Vector2> GetHotspots() {

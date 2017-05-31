@@ -7,9 +7,9 @@ namespace Ainomis.Game.Manager {
   using Artemis;
   using Artemis.Manager;
 
-  using Microsoft.Xna.Framework.Media;
   using Microsoft.Xna.Framework.Content;
   using Microsoft.Xna.Framework.Graphics;
+  using Microsoft.Xna.Framework.Media;
 
   /// <summary>Abstracts a state the game can be in.</summary>
   /// <remarks>

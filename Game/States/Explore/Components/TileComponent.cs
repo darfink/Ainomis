@@ -14,6 +14,11 @@ namespace Ainomis.Game.States.Explore.Components {
     Fishing,
   }
 
+  internal static class TileStateHelper {
+    public static bool IsMoving(this TileState state) =>
+      state == TileState.Moving || state == TileState.Running;
+  }
+
   /// <summary>Tile component.</summary>
   internal class TileComponent : IComponent {
     /// <summary>Constructs a new tile component.</summary>

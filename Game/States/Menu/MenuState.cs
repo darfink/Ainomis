@@ -1,4 +1,5 @@
 namespace Ainomis.Game.States.Menu {
+  using Ainomis.Extensions;
   using Ainomis.Game.Components;
   using Ainomis.Game.Manager;
   using Ainomis.Game.Systems;
@@ -23,11 +24,11 @@ namespace Ainomis.Game.States.Menu {
     private Song _backgroundMusic;
 
     public MenuState(
-      ContentManager content,
-      GameStateManager gameStateManager,
-      SpriteBatch spriteBatch,
-      ICommandSource commandSystem,
-      IDisplayInfo displayInfo) :
+        ContentManager content,
+        GameStateManager gameStateManager,
+        SpriteBatch spriteBatch,
+        ICommandSource commandSystem,
+        IDisplayInfo displayInfo) :
       base(content, gameStateManager, spriteBatch, commandSystem, displayInfo) {
     }
 

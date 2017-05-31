@@ -1,11 +1,18 @@
 namespace Ainomis.Shared.Input.Keyboard {
   using System;
+  using System.Linq;
+
+  using Ainomis.Extensions;
 
   using Microsoft.Xna.Framework.Input;
 
   public class KeyboardBinding : IInputBinding {
     /// <summary>Constructs a new keyboard binding.</summary>
-    public KeyboardBinding(Keys key, TimeSpan duration = new TimeSpan(), TimeSpan? timeout = null, params Keys[] modifiers) {
+    public KeyboardBinding(
+        Keys key,
+        TimeSpan duration = new TimeSpan(),
+        TimeSpan? timeout = null,
+        params Keys[] modifiers) {
       this.Modifiers = modifiers;
       this.Duration = duration;
       this.Key = key;

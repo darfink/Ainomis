@@ -14,11 +14,14 @@ namespace Ainomis.Shared.Utility {
 
     // The virtual resolution width and height is the same resolution as the
     // iPhone 7 (retina) device screen when positioned in landscape mode.
-    private static readonly KeyValuePair<string, int> VirtualResolutionWidthKV = new KeyValuePair<string, int>("VirtualResolutionWidth",  1334);
-    private static readonly KeyValuePair<string, int> VirtualResolutionHeightKV = new KeyValuePair<string, int>("VirtualResolutionHeight",  750);
+    private static readonly KeyValuePair<string, int> VirtualResolutionWidthKV =
+      new KeyValuePair<string, int>("VirtualResolutionWidth",  1334);
+
+    private static readonly KeyValuePair<string, int> VirtualResolutionHeightKV =
+      new KeyValuePair<string, int>("VirtualResolutionHeight",  750);
 
     private static readonly KeyValuePair<string, float> MusicVolumeKV =
-      new KeyValuePair<string, float>("MusicVolume", 1f);
+      new KeyValuePair<string, float>("MusicVolume", 0f);
 
     private static readonly KeyValuePair<string, bool> FullscreenKV =
       new KeyValuePair<string, bool>("Fullscreen",  false);

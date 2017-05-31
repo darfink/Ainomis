@@ -2,12 +2,11 @@
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ExternalCompile Include="AssemblyInfo.cs" />
-    <ExternalCompile Include="Extensions\ContentManagerExtensions.cs" />
     <ExternalCompile Include="Extensions\GenericExtensions.cs" />
     <ExternalCompile Include="Extensions\LinqExtensions.cs" />
-    <ExternalCompile Include="Extensions\RenderTarget2DExtensions.cs" />
-    <ExternalCompile Include="Extensions\SpriteBatchExtensions.cs" />
     <ExternalCompile Include="Extensions\StringExtensions.cs" />
+    <ExternalCompile Include="Extensions\XnaExtensions.cs" />
+    <ExternalCompile Include="GameCore.cs" />
     <ExternalCompile Include="Game\Components\AnimationComponent.cs" />
     <ExternalCompile Include="Game\Components\ControlComponent.cs" />
     <ExternalCompile Include="Game\Components\SpriteComponent.cs" />
@@ -33,7 +32,6 @@
     <ExternalCompile Include="Game\Systems\AnimationSystem.cs" />
     <ExternalCompile Include="Game\Systems\BasicRenderSystem.cs" />
     <ExternalCompile Include="Game\Systems\TranslationSystem.cs" />
-    <ExternalCompile Include="MainGame.cs" />
     <ExternalCompile Include="Shared\Camera\Camera2D.cs" />
     <ExternalCompile Include="Shared\Camera\ICamera2D.cs" />
     <ExternalCompile Include="Shared\Camera\IFocusable.cs" />

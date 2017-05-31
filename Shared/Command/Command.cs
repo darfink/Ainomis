@@ -11,7 +11,7 @@ namespace Ainomis.Shared.Command {
 
     // Movement
     Tap  = (1 << 0),
-    Move = (1 << 1),
+    Walk = (1 << 1),
     Run  = (1 << 2),
 
     // Direction
@@ -31,15 +31,15 @@ namespace Ainomis.Shared.Command {
     TapRight = (Tap | Right),
 
     // Movement aliases
-    MoveUp    = (Move | Up),
-    MoveDown  = (Move | Down),
-    MoveLeft  = (Move | Left),
-    MoveRight = (Move | Right),
+    WalkUp    = (Walk | Up),
+    WalkDown  = (Walk | Down),
+    WalkLeft  = (Walk | Left),
+    WalkRight = (Walk | Right),
 
     // Sprint aliases
-    RunUp    = (MoveUp | Run),
-    RunDown  = (MoveDown | Run),
-    RunLeft  = (MoveLeft | Run),
-    RunRight = (MoveRight | Run),
+    RunUp    = (Up | Run),
+    RunDown  = (Down | Run),
+    RunLeft  = (Left | Run),
+    RunRight = (Right | Run),
   }
 }

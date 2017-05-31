@@ -9,9 +9,18 @@ namespace Ainomis.Shared.Input.GamePad {
 
   public class GamePadBinding : IInputBinding {
     /// <summary>Constructs a new game pad binding.</summary>
-    public GamePadBinding(Buttons button, TimeSpan duration = new TimeSpan(), TimeSpan? timeout = null) {
-      this.Buttons = button.GetFlags().Cast<Buttons>().ToList();
+    public GamePadBinding(
+        Buttons button,
+        TimeSpan duration = new TimeSpan(),
+        TimeSpan? timeout = null,
+        params Buttons[] modifiers) {
+      if (button.GetFlags().Count() != 1) {
+        throw new ArgumentOutOfRangeException(nameof(button), "One button only must be specified");
+      }
+
+      this.Modifiers = modifiers;
       this.Duration = duration;
+      this.Button = button;
 
       if(timeout != null) {
         if (timeout.Value <= duration) {
@@ -23,7 +32,10 @@ namespace Ainomis.Shared.Input.GamePad {
     }
 
     /// <summary>Gets the buttons.</summary>
-    public List<Buttons> Buttons { get; private set; }
+    public Buttons Button { get; private set; }
+
+    /// <summary>Gets the modifiers.</summary>
+    public Buttons[] Modifiers { get; private set; }
 
     /// <summary>Gets the duration.</summary>
     public TimeSpan Duration { get; private set; }

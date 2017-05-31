@@ -35,10 +35,10 @@ namespace Ainomis.Shared.Input.GamePad {
     public bool IsInputActive(IInputBinding interfaceBinding) {
       var binding = (GamePadBinding)interfaceBinding;
 
-      if(binding.Buttons.All(_currentState.IsButtonDown)) {
-        if(binding.Buttons.All(button => _buttonHeldTimes[button] >= binding.Duration)) {
-          return !binding.Timeout.HasValue || binding.Buttons
-            .All(button => _buttonHeldTimes[button] < binding.Timeout.Value);
+      if(_currentState.IsButtonDown(binding.Button) && binding.Modifiers.All(_currentState.IsButtonDown)) {
+        var heldTime = _buttonHeldTimes[binding.Button];
+        if(heldTime >= binding.Duration) {
+          return !binding.Timeout.HasValue || (heldTime < binding.Timeout.Value);
         }
       }
 

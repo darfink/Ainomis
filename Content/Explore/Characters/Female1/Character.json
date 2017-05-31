@@ -1,5 +1,8 @@
 {
-  "offsetY": 3,
+  "origin": {
+    "x": 0,
+    "y": 3
+  },
   "tileset": {
     "columns": 7,
     "firstgid": 1,

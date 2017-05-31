@@ -2,6 +2,7 @@ namespace Ainomis.Game.States.Explore {
   using System;
   using System.IO;
 
+  using Ainomis.Extensions;
   using Ainomis.Game.Components;
   using Ainomis.Game.Manager;
   using Ainomis.Game.States.Explore.Components;
@@ -28,11 +29,11 @@ namespace Ainomis.Game.States.Explore {
     private Entity _playerEntity;
 
     public ExploreState(
-      ContentManager content,
-      GameStateManager gameStateManager,
-      SpriteBatch spriteBatch,
-      ICommandSource commandSystem,
-      IDisplayInfo displayInfo) :
+        ContentManager content,
+        GameStateManager gameStateManager,
+        SpriteBatch spriteBatch,
+        ICommandSource commandSystem,
+        IDisplayInfo displayInfo) :
       base(content, gameStateManager, spriteBatch, commandSystem, displayInfo) {
     }
 
@@ -94,9 +95,7 @@ namespace Ainomis.Game.States.Explore {
       entity.AddComponent(new TilesetComponent(character.Tileset));
       entity.AddComponent(new TextureComponent(tilesetTexture));
       entity.AddComponent(new TransformComponent());
-      entity.AddComponent(new SpriteComponent() {
-        Origin = new Vector2(character.OffsetX, character.OffsetY)
-      });
+      entity.AddComponent(new SpriteComponent() { Origin = character.Origin });
 
       return entity;
     }

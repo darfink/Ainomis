@@ -62,7 +62,7 @@ namespace Ainomis.Shared.Utility {
 
     private class XnaFriendlyResolver : DefaultContractResolver {
       protected override JsonContract CreateContract(Type objectType) {
-        if (objectType == typeof(Rectangle)) {
+        if (objectType == typeof(Rectangle) || objectType == typeof(Vector2)) {
           return CreateObjectContract(objectType);
         }
 

@@ -4,8 +4,7 @@ namespace Ainomis.Platform.MacOS {
   using Microsoft.Xna.Framework;
 
   public class NativeGame : Game {
-    // Private members
-    private readonly MainGame _ainomisGame;
+    private GameCore _gameCore;
 
     public NativeGame() {
       // Create the graphics device
@@ -19,26 +18,23 @@ namespace Ainomis.Platform.MacOS {
       // The FNA framework does not use the platform-specific folder by default
       Settings.PlatformResourcePrefix = "../Resources";
 #endif
-
-      // Return control to the platform-agnostic game object
-      _ainomisGame = new MainGame(this, touchEnabled: false);
     }
 
-    // Class fields
     public GraphicsDeviceManager Graphics { get; private set; }
 
     protected override void Initialize() {
-      _ainomisGame.Initialize();
+      // Return control to the platform-agnostic game object
+      _gameCore = new GameCore(this, touchEnabled: false);
       base.Initialize();
     }
 
     protected override void Update(GameTime gameTime) {
-      _ainomisGame.Update(gameTime);
+      _gameCore.Update(gameTime);
       base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime) {
-      _ainomisGame.Draw(gameTime);
+      _gameCore.Draw(gameTime);
       base.Draw(gameTime);
     }
   }

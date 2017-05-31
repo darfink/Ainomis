@@ -22,7 +22,7 @@ namespace Ainomis.Game.Resources {
     public Props Properties { get; set; }
 
     /// <summary>Retrieves a tile's offset.</summary>
-    public Vector2 GetOffsetForTile(uint index) {
+    public Vector2 GetTileOffset(uint index) {
       uint horizontalIndex = index % Width;
       uint verticalIndex = (index - (index % Width)) / Width;
 
@@ -30,7 +30,7 @@ namespace Ainomis.Game.Resources {
     }
 
     /// <summary>Retrieves a series of adjacent tiles in a direction.</summary>
-    public IEnumerable<uint> GetTilesForDirection(uint index, Direction direction) {
+    public IEnumerable<uint> GetTilesInDirection(uint index, Direction direction) {
       long delta = index;
       while ((delta = GetNextTileDelta((uint)delta, direction)) >= 0 && delta < Size) {
         yield return (uint)delta;
