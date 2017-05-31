@@ -80,6 +80,7 @@
   </ItemGroup>
   <PropertyGroup>
     <MonoMacSourcePrefix>Platform\macOS</MonoMacSourcePrefix>
+    <JsonContentPattern>Content\**\*.json</JsonContentPattern>
   </PropertyGroup>
   <Choose>
     <When Condition=" '$(UseFnaFramework)' != 'true' ">
@@ -115,13 +116,7 @@
   </Choose>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.macOS.mgcb" />
-    <Content Include="Content\Explore\Areas\FalletTown\Area.json" />
-    <Content Include="Content\Explore\Characters\Female1\Character.json" />
-    <Content Include="Content\Inputs\Default\Input.json" />
-    <None Include="Content\Menu\Background.jpg" />
-    <None Include="Content\Menu\Calibri.ttf" />
-    <None Include="Content\Menu\Label.spritefont" />
-    <None Include="Content\Menu\Music.ogg" />
+    <Content Include="$(JsonContentPattern)" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Ainomis.targets" />

@@ -108,16 +108,11 @@
   </ItemGroup>
   <PropertyGroup>
     <IPhoneSourcePrefix>Platform\iOS</IPhoneSourcePrefix>
+    <JsonContentPattern>Content\**\*.json</JsonContentPattern>
   </PropertyGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.iOS.mgcb" />
-    <Content Include="Content\Explore\Areas\FalletTown\Area.json" />
-    <Content Include="Content\Explore\Characters\Female1\Character.json" />
-    <Content Include="Content\Inputs\Default\Input.json" />
-    <None Include="Content\Menu\Background.jpg" />
-    <None Include="Content\Menu\Calibri.ttf" />
-    <None Include="Content\Menu\Label.spritefont" />
-    <None Include="Content\Menu\Music.ogg" />
+    <Content Include="$(JsonContentPattern)" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Ainomis.targets" />
