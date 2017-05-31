@@ -65,8 +65,8 @@ namespace Ainomis {
       _gameStateManager.Changed += (sender, e) => GC.Collect();
 
 #if DEBUG
-			// Ensure the container's integrity is valid
-			container.Verify();
+      // Ensure the container's integrity is valid
+      container.Verify();
 #endif
 
       // The first game state is the menu
