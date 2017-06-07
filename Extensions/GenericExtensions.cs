@@ -41,11 +41,11 @@ namespace Ainomis.Extensions {
         }
 
         PropertyInfo targetProperty = typeDest.GetProperty(srcProp.Name);
-        if (targetProperty == null || !targetProperty.CanWrite) {
+        if (targetProperty?.CanWrite != true) {
           continue;
         }
 
-        if (targetProperty.GetSetMethod(true)?.IsPrivate ?? false) {
+        if (targetProperty.GetSetMethod(true)?.IsPrivate == true) {
           continue;
         }
 

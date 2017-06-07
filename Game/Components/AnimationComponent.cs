@@ -19,7 +19,9 @@ namespace Ainomis.Game.Components {
 
     /// <summary>Creates a new animation component.</summary>
     public AnimationComponent(List<Animation> animations) {
-      _animations = animations.ThrowIfNull(nameof(animations)).ToDictionary(x => x.Name, x => x);
+      _animations = animations
+        .ThrowIfNull(nameof(animations))
+        .ToDictionary(x => x.Name, x => x);
       Name = animations.First().Name;
     }
 
@@ -54,6 +56,11 @@ namespace Ainomis.Game.Components {
     }
 
     /// <summary>Advances to the next frame of the current animation.</summary>
-    public void NextFrame() => FrameIndex = (_frameIndex + 1) % Animation.Frames.Count;
+    public void NextFrame() {
+      int nextFrame = (_frameIndex + 1) % Animation.Frames.Count;
+      if (nextFrame != 0 || Animation.Loop) {
+        FrameIndex = nextFrame;
+      }
+    }
   }
 }

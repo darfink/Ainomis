@@ -47,7 +47,7 @@
       }]
     },
     {
-      "name": "MoveUp",
+      "name": "WalkUp",
       "frames": [{
         "tileid": 5,
         "duration": "00:00:00.2"
@@ -61,7 +61,7 @@
       }]
     },
     {
-      "name": "MoveDown",
+      "name": "WalkDown",
       "frames": [{
         "tileid": 4,
         "duration": "00:00:00.2"
@@ -75,7 +75,7 @@
       }]
     },
     {
-      "name": "MoveLeft",
+      "name": "WalkLeft",
       "frames": [{
         "tileid": 6,
         "duration": "00:00:00.2"
@@ -88,7 +88,7 @@
       }]
     },
     {
-      "name": "MoveRight",
+      "name": "WalkRight",
       "frames": [{
         "tileid": 6,
         "duration": "00:00:00.2",

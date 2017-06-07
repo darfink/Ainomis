@@ -9,26 +9,17 @@ namespace Ainomis.Game.Systems {
   using Microsoft.Xna.Framework.Graphics;
 
   /// <summary>Basic render system.</summary>
-  internal class BasicRenderSystem : EntityProcessingSystem {
-    // To be included in the basic render system, an entity must include a
-    // texture and a transform component.
-    public static readonly Aspect Requirement = Aspect
-      .All(typeof(TextureComponent), typeof(TransformComponent))
-      .GetExclude(typeof(States.Explore.Components.AreaComponent));
-
+  internal class SpriteRenderSystem : EntityComponentProcessingSystem<TransformComponent, TextureComponent> {
     // Class properties
     private SpriteBatch _spriteBatch;
     private SpriteComponent _defaultSprite;
 
-    public BasicRenderSystem(SpriteBatch spriteBatch) : base(Requirement) {
+    public SpriteRenderSystem(SpriteBatch spriteBatch) {
       _defaultSprite = new SpriteComponent();
       _spriteBatch = spriteBatch.ThrowIfNull(nameof(spriteBatch));
     }
 
-    public override void Process(Entity entity) {
-      var transform = entity.GetComponent<TransformComponent>();
-      var texture = entity.GetComponent<TextureComponent>();
-
+    public override void Process(Entity entity, TransformComponent transform, TextureComponent texture) {
       // The sprite component is not required for rendering
       var sprite = entity.GetComponent<SpriteComponent>() ?? _defaultSprite;
 

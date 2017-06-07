@@ -4,7 +4,7 @@ namespace Ainomis.Game.Resources {
 
   using Microsoft.Xna.Framework;
 
-  internal class Area {
+  internal class Map {
     public uint Width { get; set; }
 
     public uint Height { get; set; }
@@ -22,11 +22,11 @@ namespace Ainomis.Game.Resources {
     public Props Properties { get; set; }
 
     /// <summary>Retrieves a tile's offset.</summary>
-    public Vector2 GetTileOffset(uint index) {
+    public Point GetTileOffset(uint index) {
       uint horizontalIndex = index % Width;
-      uint verticalIndex = (index - (index % Width)) / Width;
+      uint verticalIndex = (index - horizontalIndex) / Width;
 
-      return new Vector2(horizontalIndex * TileWidth, verticalIndex * TileHeight);
+      return new Point((int)(horizontalIndex * TileWidth), (int)(verticalIndex * TileHeight));
     }
 
     /// <summary>Retrieves a series of adjacent tiles in a direction.</summary>
@@ -58,6 +58,12 @@ namespace Ainomis.Game.Resources {
       public string Name { get; set; }
 
       public float Opacity { get; set; }
+
+      public Props Properties { get; set; }
+
+      internal class Props {
+        public bool IsMeta { get; set; }
+      }
     }
 
     internal class Props {

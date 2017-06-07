@@ -10,18 +10,29 @@ namespace Ainomis.Extensions {
     public static ContentManager Allocate(this ContentManager content) =>
       new ContentManager(content.ServiceProvider, content.RootDirectory);
 
+    /// <summary>Converts a Point to a Vector2.</summary>
+    public static Vector2 ToVector2(this Point point) => new Vector2(point.X, point.Y);
+
     /// <summary>Begins a sprite batch with an associated matrix.</summary>
-    /// <param name="spriteBatch">Sprite batch used for drawing.</param>
-    /// <param name="matrix">Matrix used for manipulation.</param>
     public static void Begin(this SpriteBatch spriteBatch, Matrix matrix) {
       spriteBatch.Begin(
         SpriteSortMode.BackToFront,
         BlendState.AlphaBlend,
-        SamplerState.LinearWrap,
+        SamplerState.LinearClamp,
         DepthStencilState.Default,
         RasterizerState.CullNone,
         null,
         matrix);
+    }
+
+    /// <summary>Begins a sprite batch with an associated blend and sampler state.</summary>
+    public static void Begin(this SpriteBatch spriteBatch, BlendState blendState, SamplerState samplerState) {
+      spriteBatch.Begin(SpriteSortMode.BackToFront, blendState, samplerState, DepthStencilState.Default, RasterizerState.CullNone);
+    }
+
+    /// <summary>Draws a texture with a position, source rectangle and layer depth.</summary>
+    public static void Draw(this SpriteBatch spriteBatch, Texture2D texture, Vector2 position, Rectangle source, float layerDepth) {
+      spriteBatch.Draw(texture, position, source, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, layerDepth);
     }
 
     /// <summary>Draws a texture with a position, color and scale.</summary>
@@ -32,9 +43,8 @@ namespace Ainomis.Extensions {
     /// <summary>Locks a render target, restoring environment upon dispose.</summary>
     public static IDisposable BeginDraw(
         this RenderTarget2D renderTarget,
-        GraphicsDevice graphicsDevice,
         Color backgroundColor) =>
-      new RenderTargetOperation(renderTarget, graphicsDevice, backgroundColor);
+      new RenderTargetOperation(renderTarget, renderTarget.GraphicsDevice, backgroundColor);
 
     private class RenderTargetOperation : IDisposable {
       private readonly RenderTargetUsage _previousRenderTargetUsage;

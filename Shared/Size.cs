@@ -17,6 +17,8 @@ namespace Ainomis.Shared {
 
     public static implicit operator Vector2(Size size) => new Vector2(size.Width, size.Height);
 
+    public static implicit operator Rectangle(Size size) => new Rectangle(0, 0, (int)size.Width, (int)size.Height);
+
     public bool Equals(Size other) => this.Width == other.Width && this.Height == other.Height;
   }
 }

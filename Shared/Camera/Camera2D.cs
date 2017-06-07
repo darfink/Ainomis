@@ -2,6 +2,7 @@ namespace Ainomis.Shared.Camera {
   using System;
 
   using Microsoft.Xna.Framework;
+  using Microsoft.Xna.Framework.Graphics;
 
   public class Camera2D : ICamera2D, Common.IUpdateable {
     private Vector2 _position;
@@ -34,7 +35,7 @@ namespace Ainomis.Shared.Camera {
     /// <summary>
     /// Gets the bounds of the camera in pixels.
     /// </summary>
-    public Rectangle GetBounds(Vector2 screenSize) {
+    public Viewport GetViewport(Vector2 screenSize) {
       Matrix inverseViewMatrix = Matrix.Invert(this.Transform);
 
       Vector2 tl = Vector2.Transform(Vector2.Zero, inverseViewMatrix);
@@ -49,7 +50,7 @@ namespace Ainomis.Shared.Camera {
         MathHelper.Max(tl.X, MathHelper.Max(tr.X, MathHelper.Max(bl.X, br.X))),
         MathHelper.Max(tl.Y, MathHelper.Max(tr.Y, MathHelper.Max(bl.Y, br.Y))));
 
-      return new Rectangle((int)min.X, (int)min.Y, (int)Math.Ceiling(max.X - min.X), (int)Math.Ceiling(max.Y - min.Y));
+      return new Viewport((int)min.X, (int)min.Y, (int)Math.Ceiling(max.X - min.X), (int)Math.Ceiling(max.Y - min.Y));
     }
 
     /// <summary>

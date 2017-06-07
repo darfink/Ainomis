@@ -67,7 +67,7 @@ namespace Ainomis.Game.States.Menu {
       // The camera needs to be created first since some systems may use it
       _camera = new Camera2D(DisplayInfo.RelativeScale);
 
-      manager.SetSystem(new BasicRenderSystem(SpriteBatch), GameLoopType.Draw);
+      manager.SetSystem(new SpriteRenderSystem(SpriteBatch), GameLoopType.Draw);
       manager.SetSystem(new TranslationSystem(), GameLoopType.Update);
     }
 

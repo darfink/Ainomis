@@ -14,7 +14,7 @@ namespace Ainomis.Game.States.Explore.Systems {
   using Microsoft.Xna.Framework;
 
   /// <summary>Tile movement system.</summary>
-  internal class TileMovementSystem : EntityComponentProcessingSystem<ControlComponent, TileComponent> {
+  internal class TileMovementSystem : EntityComponentProcessingSystem<ControlComponent, NodeComponent> {
     /// <summary>Default movement speed for entities.</summary>
     private const float MovementSpeed = 0.05f;
 
@@ -35,58 +35,63 @@ namespace Ainomis.Game.States.Explore.Systems {
     };
 
     /// <summary>Processes a movable entity.</summary>
-    public override void Process(Entity entity, ControlComponent control, TileComponent tile) {
-      var initial = (state: tile.State, direction: tile.Direction);
+    public override void Process(Entity entity, ControlComponent control, NodeComponent node) {
+      // These values must be stored, to determine whether the entity has been altered
+      var initial = (state: node.State, direction: node.Direction);
 
-      if (tile.State.IsMoving()) {
-        // TODO: The destination does not take the area's coordinates into account
+      if (node.State.IsMoving()) {
+        // TODO: The destination does not take the area's coordinates (transform) into account
         var position = entity.GetComponent<TransformComponent>().Position;
-        var destination = tile.Area.GetTileOffset(tile.Index);
-        var runCommand = Command.Run | tile.Direction.ToCommand();
+        var destination = node.Map.GetTileOffset(node.Index);
+        var runCommand = Command.Run | node.Direction.ToCommand();
 
-        if (HasReachedDestination(position, destination, tile.Direction)) {
-          tile.State = TileState.Idling;
-        } else if(tile.State == TileState.Moving && control.IsCommandActivated(runCommand)) {
-          tile.State = TileState.Running;
+        if (HasReachedDestination(position, destination.ToVector2(), node.Direction)) {
+          node.State = TileState.Idling;
+        } else if(node.State == TileState.Walking && control.IsCommandActivated(runCommand)) {
+          node.State = TileState.Running;
         }
       }
 
-      if (tile.State == TileState.Idling) {
+      if (node.State == TileState.Idling) {
         // Check for any new inputs from the command source
         var command = _movementCommands.Where(control.IsCommandActivated).FirstOrDefault();
         if (command != Command.None) {
-          bool isRunning = command.HasFlag(Command.Run);
+          bool isRunCommandActive = command.HasFlag(Command.Run);
           var direction = command.ToDirection();
 
-          if (isRunning || command.HasFlag(Command.Walk)) {
+          if (isRunCommandActive || command.HasFlag(Command.Walk)) {
             // No tiles are returned in case they are out of bounds
-            var tiles = tile.Area.GetTilesInDirection(tile.Index, direction);
+            var tiles = node.Map.GetTilesInDirection(node.Index, direction);
             foreach(var adjacentTile in tiles.Take(1)) {
-              // If the direction has changed the position must be aligned
-              if (tile.Direction != direction) {
-                AlignEntityToTile(entity, tile);
+              if (node.Map.GetTileType(adjacentTile) != Ainomis.Game.Resources.TileType.Walk) {
+                break;
+              }
+
+              // If the direction has changed, the entity must be aligned
+              if (node.Direction != direction) {
+                AlignEntityToTile(entity, node);
               }
 
               // Update the entity's current state and tile position
-              tile.State = isRunning ? TileState.Running : TileState.Moving;
-              tile.Index = adjacentTile;
+              node.State = isRunCommandActive ? TileState.Running : TileState.Walking;
+              node.Index = adjacentTile;
             }
           }
 
           // Update the entity's current direction
-          tile.Direction = direction;
+          node.Direction = direction;
         }
       }
 
-      if (initial.state != tile.State || initial.direction != tile.Direction) {
-        UpdateEntityComponents(entity, tile);
+      if (initial.state != node.State || initial.direction != node.Direction) {
+        UpdateEntityComponents(entity, node);
       }
     }
 
     /// <summary>Updates the entity's components after a state change.</summary>
-    private static void UpdateEntityComponents(Entity entity, TileComponent tile) {
+    private static void UpdateEntityComponents(Entity entity, NodeComponent tile) {
       switch (tile.State) {
-        case TileState.Moving:
+        case TileState.Walking:
         case TileState.Running:
           var speed = MovementSpeed * (tile.State == TileState.Running ? 1.8f : 1f);
           entity.AddComponent(new VelocityComponent(speed, tile.Direction.ToAngle()));
@@ -102,10 +107,10 @@ namespace Ainomis.Game.States.Explore.Systems {
     }
 
     /// <summary>Aligns the entity's position to its current tile.</summary>
-    private static void AlignEntityToTile(Entity entity, TileComponent tile) {
+    private static void AlignEntityToTile(Entity entity, NodeComponent tile) {
+      var position = tile.Map.GetTileOffset(tile.Index);
       var transform = entity.GetComponent<TransformComponent>();
-      var position = tile.Area.GetTileOffset(tile.Index);
-      transform.Position = position;
+      transform.Position = position.ToVector2();
     }
 
     /// <summary>Determines whether the entity has reached the designated destination or not.</summary>

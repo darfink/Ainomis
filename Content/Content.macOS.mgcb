@@ -38,7 +38,7 @@
 /processorParam:Quality=Low
 /build:Menu/Music.ogg
 
-#begin Explore/Areas/FalletTown/Tileset.png
+#begin Inputs/Default/Overlay.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -48,13 +48,31 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Explore/Areas/FalletTown/Tileset.png
+/build:Inputs/Default/Overlay.png
 
-#begin Explore/Areas/FalletTown/Theme.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:Explore/Areas/FalletTown/Theme.ogg
+#begin Explore/Maps/FalletTown/Tileset.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Explore/Maps/FalletTown/Tileset.png
+
+#begin Explore/Characters/MaleProtagonist/Tileset.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Explore/Characters/MaleProtagonist/Tileset.png
 
 #begin Explore/Characters/Female1/Tileset.png
 /importer:TextureImporter
@@ -68,27 +86,9 @@
 /processorParam:TextureFormat=Color
 /build:Explore/Characters/Female1/Tileset.png
 
-#begin Inputs/Default/Overlay.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Inputs/Default/Overlay.png
-
-#begin Explore/Characters/MaleProtagonist/Tileset.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Explore/Characters/MaleProtagonist/Tileset.png
+#begin Explore/Maps/FalletTown/Theme.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Explore/Maps/FalletTown/Theme.ogg
 

@@ -100,7 +100,7 @@ namespace Ainomis.Game.Manager {
     }
 
     /// <summary>Stores a game state and the modality it was activated with.</summary>
-    internal class GameStateModalityPair : Tuple<GameState, Modality> {
+    private class GameStateModalityPair : Tuple<GameState, Modality> {
       /// <summary>Constructs a new pair with a state and modality.</summary>
       public GameStateModalityPair(GameState state, Modality modality) : base(state, modality) {
       }

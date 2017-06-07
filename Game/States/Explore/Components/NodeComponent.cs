@@ -1,6 +1,7 @@
 namespace Ainomis.Game.States.Explore.Components {
   using Ainomis.Extensions;
   using Ainomis.Game.Resources;
+  using Ainomis.Game.States.Explore.Map;
 
   using Artemis.Interface;
 
@@ -9,21 +10,21 @@ namespace Ainomis.Game.States.Explore.Components {
   /// <summary>Describes all possible states for a tile component.</summary>
   internal enum TileState {
     Idling,
-    Moving,
+    Walking,
     Running,
     Fishing,
   }
 
   internal static class TileStateHelper {
     public static bool IsMoving(this TileState state) =>
-      state == TileState.Moving || state == TileState.Running;
+      state == TileState.Walking || state == TileState.Running;
   }
 
-  /// <summary>Tile component.</summary>
-  internal class TileComponent : IComponent {
-    /// <summary>Constructs a new tile component.</summary>
-    public TileComponent(Area area, uint tile) {
-      Area = area.ThrowIfNull(nameof(area));
+  /// <summary>Node component.</summary>
+  internal class NodeComponent : IComponent {
+    /// <summary>Constructs a new node component.</summary>
+    public NodeComponent(IMapController map, uint tile) {
+      Map = map.ThrowIfNull(nameof(map));
       Index = tile;
     }
 
@@ -33,8 +34,8 @@ namespace Ainomis.Game.States.Explore.Components {
     /// <summary>Gets or sets the tile the entity is located at.</summary>
     public uint Index { get; set; }
 
-    /// <summary>Gets or sets the area the entity is located in.</summary>
-    public Area Area { get; set; }
+    /// <summary>Gets or sets the map the entity is located in.</summary>
+    public IMapController Map { get; set; }
 
     /// <summary>Gets or sets the entity's direction.</summary>
     public Direction Direction { get; set; }

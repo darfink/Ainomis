@@ -5,7 +5,9 @@ namespace Ainomis.Game.States.Explore {
   using Ainomis.Extensions;
   using Ainomis.Game.Components;
   using Ainomis.Game.Manager;
+  using Ainomis.Game.Resources;
   using Ainomis.Game.States.Explore.Components;
+  using Ainomis.Game.States.Explore.Map;
   using Ainomis.Game.States.Explore.Systems;
   using Ainomis.Game.Systems;
   using Ainomis.Shared;
@@ -13,6 +15,7 @@ namespace Ainomis.Game.States.Explore {
   using Ainomis.Shared.Command;
   using Ainomis.Shared.Display;
   using Ainomis.Shared.Utility;
+  using Ainomis.Shared.Viewport;
 
   using Artemis;
   using Artemis.Manager;
@@ -26,6 +29,7 @@ namespace Ainomis.Game.States.Explore {
 
   internal class ExploreState : GameState, Common.IDrawable, Common.IUpdateable {
     private Camera2D _camera;
+    private MapContext _mapContext;
     private Entity _playerEntity;
 
     public ExploreState(
@@ -38,17 +42,20 @@ namespace Ainomis.Game.States.Explore {
     }
 
     public override void Enter() {
-      var falletTown = LoadArea(EntityWorld.CreateEntity(), "FalletTown");
-      var area = falletTown.GetComponent<AreaComponent>();
-      falletTown.Refresh();
+      _mapContext = LoadMap("FalletTown");
 
-      _playerEntity = LoadCharacter(EntityWorld.CreateEntity(), "MaleProtagonist");
+      _playerEntity = InitCharacter(EntityWorld.CreateEntity(), "MaleProtagonist");
       _playerEntity.AddComponent(new ControlComponent(CommandSystem));
-      _playerEntity.AddComponent(new TileComponent(area, 0));
+      _mapContext.Associate(_playerEntity, tile: 964);
       _playerEntity.Refresh();
 
       // Focus the camera on the player
       _camera.Focus = _playerEntity.GetComponent<TransformComponent>();
+    }
+
+    public override void Exit() {
+      _mapContext.Dispose();
+      base.Exit();
     }
 
     public void Update(GameTime gameTime) {
@@ -58,6 +65,7 @@ namespace Ainomis.Game.States.Explore {
 
     public void Draw(GameTime gameTime) {
       SpriteBatch.Begin(_camera.Transform);
+      _mapContext.Draw(gameTime);
       EntityWorld.Draw();
       SpriteBatch.End();
     }
@@ -69,23 +77,22 @@ namespace Ainomis.Game.States.Explore {
         Scale = 4f
       };
 
-      var renderArea = new RenderArea(DisplayInfo, _camera);
+      // Graphical systems
+      manager.SetSystem(new SpriteRenderSystem(SpriteBatch), GameLoopType.Draw);
 
-      manager.SetSystem(new AreaRenderSystem(SpriteBatch, renderArea), GameLoopType.Draw);
-      manager.SetSystem(new BasicRenderSystem(SpriteBatch), GameLoopType.Draw);
-
+      // Logical systems
       manager.SetSystem(new TranslationSystem(), GameLoopType.Update);
       manager.SetSystem(new StateAnimationSystem(), GameLoopType.Update);
       manager.SetSystem(new TileMovementSystem(), GameLoopType.Update);
       manager.SetSystem(new AnimationSystem(), GameLoopType.Update);
     }
 
-    private Entity LoadCharacter(Entity entity, string name) {
+    private Entity InitCharacter(Entity entity, string name) {
       var directory = Path.Combine("Explore/Characters", name);
       var character = Assets.LoadJson<Resources.Character>(Path.Combine(directory, "Character.json"));
 
       if (string.IsNullOrWhiteSpace(character.Tileset?.Image)) {
-        throw new ArgumentException("Invalid character; no associated tilesets", nameof(name));
+        throw new ArgumentException("Invalid character; no associated tileset", nameof(name));
       }
 
       var tilesetPath = Path.Combine(directory, Path.ChangeExtension(character.Tileset.Image, null));
@@ -100,28 +107,7 @@ namespace Ainomis.Game.States.Explore {
       return entity;
     }
 
-    private Entity LoadArea(Entity entity, string name) {
-      var directory = Path.Combine("Explore/Areas", name);
-      var area = Assets.LoadJson<AreaComponent>(Path.Combine(directory, "Area.json"));
-
-      if (area.Tilesets.Count == 0) {
-        throw new ArgumentException("Invalid area; no associated tilesets", nameof(name));
-      }
-
-      if (!string.IsNullOrWhiteSpace(area.Properties.MusicTheme)) {
-        var themePath = Path.Combine(directory, Path.ChangeExtension(area.Properties.MusicTheme, null));
-        var themeMusic = Content.Load<Song>(themePath);
-        MediaPlayer.Play(themeMusic);
-      }
-
-      var tilesetPath = Path.Combine(directory, Path.ChangeExtension(area.Tilesets[0].Image, null));
-      var tilesetTexture = Content.Load<Texture2D>(tilesetPath);
-
-      entity.AddComponent(new TransformComponent());
-      entity.AddComponent(new TextureComponent(tilesetTexture));
-      entity.AddComponent(area);
-
-      return entity;
-    }
+    private MapContext LoadMap(string name) => new MapContext(
+        SpriteBatch, Content.ServiceProvider, new CameraDisplayView(_camera, DisplayInfo), name);
   }
 }

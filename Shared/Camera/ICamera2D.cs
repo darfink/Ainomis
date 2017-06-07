@@ -45,7 +45,7 @@ namespace Ainomis.Shared.Camera {
     /// <summary>Gets the bounds of the Camera.</summary>
     /// <seealso cref="IDisplayInfo"/>
     /// <value>The bounds.</value>
-    Rectangle GetBounds(Vector2 screenSize);
+    Viewport GetViewport(Vector2 screenSize);
 
     /// <summary>
     ///   Determines whether the target is in view given the specified position.

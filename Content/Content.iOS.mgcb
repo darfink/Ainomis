@@ -38,13 +38,13 @@
 /processorParam:Quality=Best
 /build:Menu/Music.ogg
 
-#begin Explore/Areas/FalletTown/Theme.ogg
+#begin Explore/Maps/FalletTown/Theme.ogg
 /importer:OggImporter
 /processor:SongProcessor
 /processorParam:Quality=Best
-/build:Explore/Areas/FalletTown/Theme.ogg
+/build:Explore/Maps/FalletTown/Theme.ogg
 
-#begin Explore/Areas/FalletTown/Tileset.png
+#begin Explore/Maps/FalletTown/Tileset.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -54,7 +54,7 @@
 /processorParam:ResizeToPowerOfTwo=True
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Explore/Areas/FalletTown/Tileset.png
+/build:Explore/Maps/FalletTown/Tileset.png
 
 #begin Explore/Characters/Female1/Tileset.png
 /importer:TextureImporter

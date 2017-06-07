@@ -12,7 +12,7 @@ namespace Ainomis.Game.Systems {
     public override void Process(Entity entity, AnimationComponent animation, TilesetComponent tileset) {
       animation.FrameTime += TimeSpan.FromTicks(this.EntityWorld.Delta);
 
-      if (animation.FrameTime > animation.Frame.Duration) {
+      if (animation.FrameTime >= animation.Frame.Duration) {
         animation.FrameTime = TimeSpan.Zero;
         animation.NextFrame();
       }
