@@ -44,6 +44,10 @@ namespace Ainomis.Game.States.Explore {
     public override void Enter() {
       _mapContext = LoadMap("FalletTown");
 
+      var female1 = InitCharacter(EntityWorld.CreateEntity(), "Female1");
+      _mapContext.Associate(female1, tile: 965);
+      female1.Refresh();
+
       _playerEntity = InitCharacter(EntityWorld.CreateEntity(), "MaleProtagonist");
       _playerEntity.AddComponent(new ControlComponent(CommandSystem));
       _mapContext.Associate(_playerEntity, tile: 964);

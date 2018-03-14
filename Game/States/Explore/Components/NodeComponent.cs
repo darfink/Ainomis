@@ -7,7 +7,7 @@ namespace Ainomis.Game.States.Explore.Components {
 
   using Microsoft.Xna.Framework;
 
-  /// <summary>Describes all possible states for a tile component.</summary>
+  /// <summary>Describes all possible states for a node component.</summary>
   internal enum TileState {
     Idling,
     Walking,
