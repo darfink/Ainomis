@@ -1,11 +1,12 @@
 # Ainomis
 
-This is an aspiring implementation of a Pokémon game.
+This is an aspiring implementation of a Pokémon game.  
 It is developed using MonoGame/FNA in C#, allowing it to be cross-platform.
 
 ## Platforms
 
-Adding additional platforms is a breeze, but this is enough at the moment.
+Adding additional platforms is a breeze, but these are supported at the
+moment:
 
 - macOS
 - iOS
@@ -19,10 +20,10 @@ awesome learning source, whilst also applying interesting patterns, such as
 Highlighting some awesome abstractions:
 
 - `InputActionBinder` abstracts all controller-specific input.
-- `ControlComponent` abstracts all input sources (player or NPC).
+- `ControlComponent` abstracts all input sources (e.g. player or NPC).
 - `GameStateManager` allows simple state transitions.
 
-## FNA vs MonoGame
+## MonoGame vs FNA
 
 MonoGame is used due to it's awesome support for mobile platforms, whilst FNA
 is used on desktops, due to better performance and more extensive controller
