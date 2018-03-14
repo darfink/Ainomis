@@ -4,12 +4,6 @@ namespace Ainomis.Game.Resources {
 
   using Microsoft.Xna.Framework;
 
-  internal enum TileType {
-    Block,
-    Walk,
-    Surf,
-  }
-
   internal class Tileset {
     public uint Columns { get; set; }
 
@@ -56,10 +50,6 @@ namespace Ainomis.Game.Resources {
         (int)(Margin + (verticalIndex * TileHeight) + (verticalIndex * Spacing)),
         (int)TileWidth,
         (int)TileHeight);
-    }
-
-    internal class Tile {
-      public TileType Type { get; set; }
     }
 
     internal class Props {

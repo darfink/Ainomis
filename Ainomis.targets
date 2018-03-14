@@ -21,6 +21,7 @@
     <ExternalCompile Include="Game\Resources\Animation.cs" />
     <ExternalCompile Include="Game\Resources\Character.cs" />
     <ExternalCompile Include="Game\Resources\Map.cs" />
+    <ExternalCompile Include="Game\Resources\Tile.cs" />
     <ExternalCompile Include="Game\Resources\Tileset.cs" />
     <ExternalCompile Include="Game\States\Explore\Components\NodeComponent.cs" />
     <ExternalCompile Include="Game\States\Explore\ExploreState.cs" />
