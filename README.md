@@ -17,7 +17,7 @@ This code base has been developed with a lot of care, aspiring it to be an
 awesome learning source, whilst also applying interesting patterns, such as
 [ECS](https://en.wikipedia.org/wiki/Entity%E2%80%93component%E2%80%93system).
 
-Highlighting some awesome abstractions:
+Highlighting some abstractions:
 
 - `InputActionBinder` abstracts all controller-specific input.
 - `ControlComponent` abstracts all input sources (e.g. player or NPC).
@@ -25,7 +25,7 @@ Highlighting some awesome abstractions:
 
 ## MonoGame vs FNA
 
-MonoGame is used due to it's awesome support for mobile platforms, whilst FNA
+MonoGame is used due to it's fantastic support for mobile platforms, whilst FNA
 is used on desktops, due to better performance and more extensive controller
 support.
 
